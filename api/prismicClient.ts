@@ -18,7 +18,7 @@ export class PrismicClient {
   constructor({ req = undefined } = {}, locale = Languages.en) {
     this.url = PRISMIC_API_URL;
     this.req = req;
-    this.locale = locale
+    this.locale = locale;
   }
 
   get api() {

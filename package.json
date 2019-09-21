@@ -1,0 +1,59 @@
+{
+  "name": "thecodex",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rayzru/thecodex.git"
+  },
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "./node_modules/.bin/next",
+    "build": "./node_modules/.bin/next build",
+    "now-build": "./node_modules/.bin/next build",
+    "start": "./node_modules/.bin/next start",
+    "type-check": "./node_modules/.bin/tsc",
+    "lint": "./node_modules/.bin/tslint -c tslint.json -p tsconfig.json",
+    "jest": "./node_modules/.bin/jest --passWithNoTests --ci --clearCache",
+    "test": "yarn run type-check && yarn run lint && yarn run jest"
+  },
+  "dependencies": {
+    "nookies": "^2.0.8",
+    "prismic-dom": "^2.1.0",
+    "prismic-javascript": "^2.1.1",
+    "prismic-reactjs": "^1.1.1",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "styled-components": "^4.3.2"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.5.0",
+    "@babel/plugin-proposal-decorators": "^7.4.4",
+    "@types/jest": "^24.0.18",
+    "@types/node": "^12.7.5",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
+    "@types/styled-components": "^4.1.19",
+    "babel-core": "^6.26.3",
+    "babel-jest": "^24.9.0",
+    "babel-plugin-styled-components": "^1.10.6",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "husky": "^3.0.5",
+    "jest": "^24.9.0",
+    "next": "^9.0.6",
+    "react-addons-test-utils": "^15.6.2",
+    "react-test-renderer": "^16.9.0",
+    "ts-jest": "^24.1.0",
+    "tslint": "^5.20.0",
+    "tslint-react": "^4.1.0",
+    "tslint-react-hooks": "^2.2.1",
+    "typescript": "3.6.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn run type-check && yarn run lint",
+      "pre-push": "yarn run jest"
+    }
+  }
+}

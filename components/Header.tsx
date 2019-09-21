@@ -1,13 +1,30 @@
 import Link from 'next/link';
+import Router from 'next/router';
 import * as React from 'react';
 import styled from 'styled-components';
+import { StyledLink } from './common';
 
-const Header: React.FunctionComponent = ({ children }) => (
+const isHomePage = () => {
+  console.log('PATHNAME', Router.query);
+  const { slug } = Router.query;
+  return !(slug && slug.length);
+};
+
+const LogoBlock: React.FunctionComponent = () => (
+  <Logo>thecodex</Logo>
+);
+
+const Header: React.FunctionComponent = () => (
   <Wrapper>
-    {children}
-    <Link href='/'>
-      <Logo>thecodex</Logo>
-    </Link>
+    {isHomePage()
+      ? <LogoBlock />
+      : (
+        <Link href={'/'} as={'/'} passHref>
+          <StyledLink>
+            <LogoBlock />
+          </StyledLink>
+        </Link>)
+    }
     <Menu></Menu>
   </Wrapper>
 );
@@ -23,13 +40,12 @@ const Wrapper = styled.header`
   flex-flow: row nowrap;
 `;
 
-const Logo = styled.a`
+const Logo = styled.div`
   flex: 0;
   margin-left: 20px;
   font-family: 'Oswald', sans-serif;
   font-size: 30px;
   font-weight: 400;
-  cursor: pointer;
   color: #fff;
 `;
 

@@ -1,15 +1,16 @@
+import { Languages } from 'api/prismicClient';
 import * as React from 'react';
 import styled from 'styled-components';
 import Footer from './Footer';
 import Header from './Header';
 
 interface Props {
-  title?: string;
+  locale?: Languages;
 }
 
-const Layout: React.FunctionComponent<Props> = ({ children }) => (
+const Layout: React.FunctionComponent<Props> = ({ locale, children }) => (
   <Wrapper>
-    <Header />
+    <Header locale={locale} />
     {children}
     <Footer />
   </Wrapper>

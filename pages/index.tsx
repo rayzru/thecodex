@@ -1,27 +1,23 @@
-import Link from 'next/link';
+import cookie from 'js-cookie';
 import * as React from 'react';
-import { prismicClient } from '../api/prismicClient';
-import { Description, Statement, StyledLink, Title } from '../components/common';
+import { Languages, prismicClient } from '../api/prismicClient';
+import { Description, Statement, Title } from '../components/common';
 import Layout from '../components/Layout';
 
-const Index = ({ title, uid }) => (
-  <Layout>
+const Index = ({ title, locale }) => (
+  <Layout locale={locale}>
     <Statement>
-      <Link href={`/?slug=${uid}`} as={`/${uid}`} passHref >
-        <StyledLink>
-          <Title>{title}</Title>
-        </StyledLink>
-      </Link>
+      <Title>{title}</Title>
       <Description></Description>
     </Statement>
   </Layout >
 );
 
-Index.getInitialProps = async ({ ctx, query, router }) => {
-  const client = prismicClient(ctx);
-  console.log('client created', query, router);
+Index.getInitialProps = async ({ req, ctx, query }) => {
+  const locale = (req) ? Languages.en : cookie.get('locale') || Languages.en;
+  const client = prismicClient(ctx, locale);
   const statement = query.slug ? await client.getStatement(query.slug) : await client.getLastStatement();
-  return { ...statement };
+  return { ...statement, locale };
 };
 
 export default Index;

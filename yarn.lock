@@ -2391,7 +2391,7 @@ convert-source-map@1.6.0, convert-source-map@^1.1.0, convert-source-map@^1.4.0, 
   dependencies:
     safe-buffer "~5.1.1"
 
-cookie@0.4.0, cookie@^0.4.0:
+cookie@0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.4.0.tgz#beb437e7022b3b6d49019d088665303ebe9c14ba"
   integrity sha512-+Hp8fLp57wnUSt0tY0tHEXh4voZRDnoIrZPqlo3DPiI4y9lwg/jqx+1Om94/W6ZaPDOUbnjOt/99w66zk+l1Xg==
@@ -4425,6 +4425,11 @@ jest@^24.9.0:
     import-local "^2.0.0"
     jest-cli "^24.9.0"
 
+js-cookie@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-2.2.1.tgz#69e106dc5d5806894562902aa5baec3744e9b2b8"
+  integrity sha512-HvdH2LzI/EAZcUwA8+0nKNtWHqS+ZmijLA30RwZA0bo7ToCckjK5MkGhjED9KoRcXO6BaGI3I9UIzSA1FKFPOQ==
+
 js-levenshtein@^1.1.3:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/js-levenshtein/-/js-levenshtein-1.1.6.tgz#c6cee58eb3550372df8deb85fad5ce66ce01d59d"
@@ -4499,11 +4504,6 @@ jsesc@~0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/jsesc/-/jsesc-0.5.0.tgz#e7dee66e35d6fc16f710fe91d5cf69f70f08911d"
   integrity sha1-597mbjXW/Bb3EP6R1c9p9w8IkR0=
-
-jsmin@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/jsmin/-/jsmin-1.0.1.tgz#e7bd0dcd6496c3bf4863235bf461a3d98aa3b98c"
-  integrity sha1-570NzWSWw79IYyNb9GGj2YqjuYw=
 
 json-parse-better-errors@^1.0.1, json-parse-better-errors@^1.0.2:
   version "1.0.2"
@@ -5196,15 +5196,6 @@ node-releases@^1.1.29:
   dependencies:
     semver "^5.3.0"
 
-nookies@^2.0.8:
-  version "2.0.8"
-  resolved "https://registry.yarnpkg.com/nookies/-/nookies-2.0.8.tgz#e1e72349d7b5ea24ef7e96900346e8764a6851d1"
-  integrity sha512-aSJqgRxcEf4BjLjsKP/Ypc9bo0VO1mHrJp+2+1tnQUVHszcM27Ysfh0Go8thUf5eArW4lA5wfnXaEDRg+zc2wA==
-  dependencies:
-    cookie "^0.4.0"
-    jsmin "^1.0.1"
-    set-cookie-parser "^2.2.1"
-
 nopt@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/nopt/-/nopt-4.0.1.tgz#d0d4685afd5415193c8c7505602d0d17cd64474d"
@@ -5814,15 +5805,6 @@ prismic-javascript@^2.1.1:
     cross-fetch "^2.2.3"
     promise-polyfill "8.0.0"
 
-prismic-reactjs@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/prismic-reactjs/-/prismic-reactjs-1.1.1.tgz#598b54b611da0bda7591fff710f9ec4422cd2927"
-  integrity sha512-Z1JEmOFUjF4ylm9Rbt19bbRkpDIkDnlG4GJdlXIaD5uZAyW/q+tCWwYIYzuT8a1exod2SWQB7mXEXXCQo9xrgQ==
-  dependencies:
-    prismic-helpers "^1.0.0"
-    prismic-richtext "^1.0.3"
-    prop-types "^15.7.2"
-
 prismic-richtext@^0.4.2:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/prismic-richtext/-/prismic-richtext-0.4.2.tgz#bdc27d2c3d0e8e2226918b7ad2708fd3ac3d1e7f"
@@ -5830,14 +5812,6 @@ prismic-richtext@^0.4.2:
   dependencies:
     ramda "^0.25.0"
     uuid "^3.1.0"
-
-prismic-richtext@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/prismic-richtext/-/prismic-richtext-1.0.3.tgz#ce8c8c18d65b01f1036f222b993ad2de700199fe"
-  integrity sha512-ZM45dVPL713+oDpt8ysWRY2pw3esBxRrqBlUO+q/T0WK0SNVSq29tQYhVdIALd8hRfF7X1lfpW0Q0YymEdh0AA==
-  dependencies:
-    ramda "^0.26.1"
-    uuid "^3.3.2"
 
 private@^0.1.6, private@^0.1.8:
   version "0.1.8"
@@ -5990,11 +5964,6 @@ ramda@^0.25.0:
   version "0.25.0"
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.25.0.tgz#8fdf68231cffa90bc2f9460390a0cb74a29b29a9"
   integrity sha512-GXpfrYVPwx3K7RQ6aYT8KPS8XViSXUVJT1ONhoKPE9VAleW42YE+U+8VEyGWt41EnEQW7gwecYJriTI0pKoecQ==
-
-ramda@^0.26.1:
-  version "0.26.1"
-  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
-  integrity sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==
 
 randexp@0.4.6:
   version "0.4.6"
@@ -6501,11 +6470,6 @@ set-blocking@^2.0.0, set-blocking@~2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/set-blocking/-/set-blocking-2.0.0.tgz#045f9782d011ae9a6803ddd382b24392b3d890f7"
   integrity sha1-BF+XgtARrppoA93TgrJDkrPYkPc=
-
-set-cookie-parser@^2.2.1:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/set-cookie-parser/-/set-cookie-parser-2.4.0.tgz#0b3b2ca28188d830fe7a0a04308cdc8e632d8327"
-  integrity sha512-qYs5vMi1s6HB3nNmlPWQpd8rx/tubHGKHiTcmb3k5QqDYQFQSmWnJqayLaG3pODo5TCZc8jgqKhsOdicmZK2kg==
 
 set-value@^2.0.0, set-value@^2.0.1:
   version "2.0.1"

@@ -13,11 +13,12 @@ export class PrismicClient {
   private url: string;
   private client: any;
   private req: any;
-  private lang: Languages = Languages.en;
+  private locale: Languages = Languages.en;
 
-  constructor({ req = undefined } = {}) {
+  constructor({ req = undefined } = {}, locale = Languages.en) {
     this.url = PRISMIC_API_URL;
     this.req = req;
+    this.locale = locale
   }
 
   get api() {
@@ -28,10 +29,10 @@ export class PrismicClient {
   }
 
   private query = (predicates?, options?) => this.api
-    .then((api: any) => (api.query(predicates, { ...options, lang: this.lang })))
+    .then((api: any) => (api.query(predicates, { ...options, lang: this.locale })))
 
   allByType = (type: string, options = {}, predicates = []) => (
-    this.query([Prismic.Predicates.at('document.type', type) as never, ...predicates], { ...options, lang: this.lang })
+    this.query([Prismic.Predicates.at('document.type', type) as never, ...predicates], { ...options, lang: this.locale })
       .then((response: any) => ({ pagination: pagination(response), results: response.results }))
   )
 
@@ -41,18 +42,18 @@ export class PrismicClient {
       strict
         ? Prismic.Predicates.at('document.tags', Array.isArray(tags) ? [...tags] : [tags]) as never
         : Prismic.Predicates.any('document.tags', Array.isArray(tags) ? [...tags] : [tags]) as never,
-    ], { ...options, lang: this.lang })
+    ], { ...options, lang: this.locale })
   )
 
   oneByType = (type: string, uid: string, options?: any) => {
     if (!uid) return this.allByType(type, options);
-    return this.query(Prismic.Predicates.at(`my.${type}.uid`, uid) as never, { ...options, lang: this.lang })
+    return this.query(Prismic.Predicates.at(`my.${type}.uid`, uid) as never, { ...options, lang: this.locale })
       .then((results: any) => results[0]);
   }
 
   single = (type: string, options?: any) => (
     this.api
-      .then((api: any) => api.getSingle(type, { ...options, lang: this.lang }))
+      .then((api: any) => api.getSingle(type, { ...options, lang: this.locale }))
   )
 
   getLastStatement = async () => (
@@ -69,7 +70,7 @@ export class PrismicClient {
   )
 }
 
-export const prismicClient = (context: NextPageContext) => new PrismicClient(context);
+export const prismicClient = (context: NextPageContext, locale?: Languages) => new PrismicClient(context, locale);
 
 const handleStatementResult = (statementResponse) => ({
   id: statementResponse.id,

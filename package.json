@@ -18,10 +18,9 @@
     "test": "yarn run type-check && yarn run lint && yarn run jest"
   },
   "dependencies": {
-    "nookies": "^2.0.8",
+    "js-cookie": "^2.2.1",
     "prismic-dom": "^2.1.0",
     "prismic-javascript": "^2.1.1",
-    "prismic-reactjs": "^1.1.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "styled-components": "^4.3.2"

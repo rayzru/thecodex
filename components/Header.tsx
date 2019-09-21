@@ -1,22 +1,23 @@
+import { Languages } from 'api/prismicClient';
+import { WithRouterProps } from 'next/dist/client/with-router';
 import Link from 'next/link';
-import Router from 'next/router';
+import { withRouter } from 'next/router';
 import * as React from 'react';
 import styled from 'styled-components';
 import { StyledLink } from './common';
-
-const isHomePage = () => {
-  console.log('PATHNAME', Router.query);
-  const { slug } = Router.query;
-  return !(slug && slug.length);
-};
+import LanguageSwitcher from './LanguageSwitcher';
 
 const LogoBlock: React.FunctionComponent = () => (
   <Logo>thecodex</Logo>
 );
 
-const Header: React.FunctionComponent = () => (
+interface WithLocaleProp extends WithRouterProps {
+  locale?: Languages;
+}
+
+const Header: React.FunctionComponent<WithLocaleProp> = ({ locale, router: { query: { slug } } }) => (
   <Wrapper>
-    {isHomePage()
+    {!slug
       ? <LogoBlock />
       : (
         <Link href={'/'} as={'/'} passHref>
@@ -26,10 +27,11 @@ const Header: React.FunctionComponent = () => (
         </Link>)
     }
     <Menu></Menu>
+    <LanguageSwitcher locale={locale}></LanguageSwitcher>
   </Wrapper>
 );
 
-export default Header;
+export default withRouter(Header);
 
 const Wrapper = styled.header`
   flex: 0;
@@ -50,5 +52,7 @@ const Logo = styled.div`
 `;
 
 const Menu = styled.div`
-  flex: 0;
+  flex: 1;
+  margin-left: 20px;
+  margin-right: 20px;
 `;

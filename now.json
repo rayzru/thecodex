@@ -17,6 +17,10 @@
       "dest": "/static/favicon.ico"
     },
     {
+      "src": "/([^/]+)",
+      "dest": "/index?slug=$1"
+    },
+    {
       "src": "^/static/(.*)",
       "dest": "/static/$1"
     }

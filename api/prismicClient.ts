@@ -55,12 +55,25 @@ export class PrismicClient {
       .then((api: any) => api.getSingle(type, { ...options, lang: this.lang }))
   )
 
-  getLastStatement = async () => this.single('statement', { orderings: '[document.last_publication_date desc]' })
-    .then((res: any) => ({
-      id: res.id,
-      title: RichText.asText(res.data.title),
-      description: RichText.asHtml(res.data.description)
-    }));
+  getLastStatement = async () => (
+    this.allByType('statement', { orderings: '[document.last_publication_date desc]', page: 1, pageSize: 1 }, [])
+      .then((res: any) => res.results[0])
+      .then((res: any) => handleStatementResult(res))
+  )
+
+  getStatement = async (slug) => (
+    this.allByType('statement', {}, [Prismic.Predicates.at('my.statement.uid', slug)])
+      .then((res: any) => res.results[0])
+      .then((res: any) => handleStatementResult(res))
+      .catch(error => { throw new Error('Unknown Link'); console.log(error); })
+  )
 }
 
 export const prismicClient = (context: NextPageContext) => new PrismicClient(context);
+
+const handleStatementResult = (statementResponse) => ({
+  id: statementResponse.id,
+  uid: statementResponse.uid,
+  title: RichText.asText(statementResponse.data.title),
+  description: RichText.asHtml(statementResponse.data.description)
+});

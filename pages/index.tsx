@@ -1,43 +1,27 @@
+import Link from 'next/link';
 import * as React from 'react';
-import styled from 'styled-components';
 import { prismicClient } from '../api/prismicClient';
+import { Description, Statement, StyledLink, Title } from '../components/common';
 import Layout from '../components/Layout';
 
-const Index = ({ title }) => (
+const Index = ({ title, uid }) => (
   <Layout>
     <Statement>
-      <Title>{title}</Title>
+      <Link href={`/?slug=${uid}`} as={`/${uid}`} passHref >
+        <StyledLink>
+          <Title>{title}</Title>
+        </StyledLink>
+      </Link>
       <Description></Description>
     </Statement>
   </Layout >
 );
 
-Index.getInitialProps = async ({ ctx }: { ctx: any }) => {
+Index.getInitialProps = async ({ ctx, query, router }) => {
   const client = prismicClient(ctx);
-  console.log('client created');
-  const statement = await client.getLastStatement();
+  console.log('client created', query, router);
+  const statement = query.slug ? await client.getStatement(query.slug) : await client.getLastStatement();
   return { ...statement };
 };
-
-const Statement = styled.article`
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-`;
-
-const Title = styled.h1`
-  font-size: 7.9vw;
-  height: 20%;
-  font-weight: 500;
-  font-family: 'Oswald';
-  color: #fff;
-  text-align: center;
-  width: 100%;
-`;
-
-const Description = styled.div`
-
-`;
 
 export default Index;

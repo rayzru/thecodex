@@ -21,7 +21,7 @@ export class PrismicClient {
     this.locale = locale;
   }
 
-  get api() {
+  private get api() {
     if (!this.client) {
       this.client = Prismic.getApi(this.url, { req: this.req });
     }
@@ -54,20 +54,25 @@ export class PrismicClient {
   single = (type: string, options?: any) => (
     this.api
       .then((api: any) => api.getSingle(type, { ...options, lang: this.locale }))
-  )
+  );
 
-  getLastStatement = async () => (
-    this.allByType('statement', { orderings: '[document.last_publication_date desc]', page: 1, pageSize: 1 }, [])
+  getStatements = async (options: any = {}) => (
+    this.allByType('statement', { orderings: '[document.last_publication_date desc]', page: 1, pageSize: 1, ...options })
       .then((res: any) => res.results[0])
       .then((res: any) => handleStatementResult(res))
-  )
+  );
 
   getStatement = async (slug) => (
     this.allByType('statement', {}, [Prismic.Predicates.at('my.statement.uid', slug)])
       .then((res: any) => res.results[0])
       .then((res: any) => handleStatementResult(res))
       .catch(error => { throw new Error('Unknown Link'); console.log(error); })
-  )
+  );
+
+  getAbout = async () => (
+    this.single('about').then(res => ({ slices: res.data.body }))
+  );
+
 }
 
 export const prismicClient = (context: NextPageContext, locale?: Languages) => new PrismicClient(context, locale);

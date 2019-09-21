@@ -20,11 +20,12 @@ const LanguageSwitcher: React.FunctionComponent<LanguageSwitcherProps> = ({ loca
 export default LanguageSwitcher;
 
 const setCookie = (locale: Languages) => {
-  cookie.set('locale', locale);
+  cookie.set('locale', locale, { path: '/' });
   const { slug } = Router.query;
   const date = new Date().getTime();
-  const href = slug ? `/?slug=${slug}&update=${date}` : `/?update=${date}`;
-  const as = slug ? `/${slug}` : '/';
+  const href = slug ? `/?slug=${slug}&update=${date}` : `${Router.pathname}?update=${date}`;
+  const as = slug ? `/${slug}` : `${Router.pathname}`;
+  console.log(href, as, Router.pathname);
   Router.push(href, as);
 };
 

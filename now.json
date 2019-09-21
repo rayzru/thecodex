@@ -17,6 +17,9 @@
       "dest": "/static/favicon.ico"
     },
     {
+      "src": "/about"
+    },
+    {
       "src": "/([^/]+)",
       "dest": "/index?slug=$1"
     },

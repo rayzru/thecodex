@@ -7,15 +7,23 @@ interface Props {
   locale?: Languages;
   page: number;
   totalPages: number;
+  slug: string;
 }
 
-const Navigation: React.FunctionComponent<Props> = ({ page, totalPages }) => {
-  if (totalPages === 1) return undefined;
+const Navigation: React.FunctionComponent<Props> = ({ page, totalPages, slug }) => {
+  if (slug) return (
+    <Wrapper>
+      <Link href={'/'} as={'/'} passHref>
+        <Arrow>&uarr;</Arrow>
+      </Link>
+    </Wrapper>
+  );
+  if (totalPages === 1) return (<Wrapper />);
   return (
     <Wrapper>
       {page > 1 ? (<Link href={{ query: { page: page - 1 } }} as={'/'} passHref><Arrow>&larr;</Arrow></Link>) : (<DisabledArrow>&larr;</DisabledArrow>)}
       {page < totalPages ? (<Link href={{ query: { page: page + 1 } }} as={'/'} passHref><Arrow>&rarr;</Arrow></Link>) : (<DisabledArrow>&rarr;</DisabledArrow>)}
-    </Wrapper >
+    </Wrapper>
   );
 };
 

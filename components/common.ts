@@ -9,7 +9,7 @@ export const Statement = styled.article`
 
 export const Title = styled.h1`
   font-size: 10vw;
-  font-weight: 500;
+  font-weight: 600;
   color: #eee;
   font-family: 'Oswald';
   text-align: center;

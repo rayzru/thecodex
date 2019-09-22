@@ -9,42 +9,65 @@ import { Description, Statement, StyledLink, Title } from '../components/common'
 import Layout from '../components/Layout';
 import Navigation from '../components/Navigation';
 
-const Index = ({ statements: [{ title, uid }], pagination: { page, totalPages }, locale }) => {
+const Index = ({ statements: [{ title, uid }], pagination: { page, totalPages }, locale, slug }) => {
+
+  console.log(slug);
 
   const nextPage = () => Router.push({ pathname: Router.pathname, query: { page: page + (page > 1 ? -1 : 0) } }, '/');
   const prevPage = () => Router.push({ pathname: Router.pathname, query: { page: page + (page < totalPages ? 1 : 0) } }, '/');
+  const homePage = () => Router.push({ pathname: '/', query: {} }, '/');
 
-  const handlers = useSwipeable({
-    onSwipedLeft: () => prevPage(),
-    onSwipedRight: () => nextPage(),
-    preventDefaultTouchmoveEvent: true,
-    trackMouse: true
-  });
+  let handlers = {};
+  if (slug) {
+    handlers = useSwipeable({
+      onSwipedUp: () => homePage(),
+      onSwipedLeft: () => { },
+      onSwipedRight: () => { },
+      preventDefaultTouchmoveEvent: true,
+      trackMouse: true
+    });
+    useHotkeys('left', () => { });
+    useHotkeys('right', () => { });
+    useHotkeys('up', () => homePage());
+  } else {
+    handlers = useSwipeable({
+      onSwipedUp: () => { },
+      onSwipedLeft: () => prevPage(),
+      onSwipedRight: () => nextPage(),
+      preventDefaultTouchmoveEvent: true,
+      trackMouse: true
+    });
 
-  useHotkeys('left', () => nextPage());
-  useHotkeys('right', () => prevPage());
-
+    useHotkeys('left', () => nextPage());
+    useHotkeys('right', () => prevPage());
+    useHotkeys('up', () => { });
+  }
 
   return (
     <Layout locale={locale} >
       <Statement {...handlers}>
-        <Link href={`/?slug=${uid}`} as={`/${uid}`}>
-          <StyledLink>
-            <Title>{title}</Title>
-          </StyledLink>
-        </Link>
+        {slug
+          ? (<Title>{title}</Title>)
+          : (
+            <Link href={`/?slug=${uid}`} as={`/${uid}`} passHref>
+              <StyledLink>
+                <Title>{title}</Title>
+              </StyledLink>
+            </Link>
+          )
+        }
         <Description></Description>
       </Statement>
-      <Navigation page={page} totalPages={totalPages} />
+      <Navigation page={page} totalPages={totalPages} slug={slug} />
     </Layout >
   );
 };
 
-Index.getInitialProps = async ({ req, ctx, query }) => {
+Index.getInitialProps = async ({ req, ctx, query: { page, slug } }) => {
   const locale = (req) ? Languages.en : cookie.get('locale') as Languages || Languages.en;
   const client = prismicClient(ctx, locale);
-  const statement = query.slug ? await client.getStatement(query.slug) : await client.getStatements({ page: query.page || 1 });
-  return { ...statement, locale };
+  const statement = slug ? await client.getStatement(slug) : await client.getStatements({ page: page || 1 });
+  return { ...statement, locale, slug };
 };
 
 export default Index;

@@ -5,10 +5,11 @@ import { Languages } from '../api/prismicClient';
 
 interface Props {
   locale?: Languages;
-  pagination: any;
+  page: number;
+  totalPages: number;
 }
 
-const Navigation: React.FunctionComponent<Props> = ({ pagination: { page, totalPages } }) => {
+const Navigation: React.FunctionComponent<Props> = ({ page, totalPages }) => {
   if (totalPages === 1) return undefined;
   return (
     <Wrapper>

@@ -25,7 +25,6 @@ const setCookie = (locale: Languages) => {
   const date = new Date().getTime();
   const href = slug ? `/?slug=${slug}&update=${date}` : `${Router.pathname}?update=${date}`;
   const as = slug ? `/${slug}` : `${Router.pathname}`;
-  console.log(href, as, Router.pathname);
   Router.push(href, as);
 };
 

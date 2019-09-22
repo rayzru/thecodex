@@ -37,6 +37,7 @@ export default About;
 
 const Article = styled.article`
   font-family: 'Montserrat', sans-serif;
+  line-height: 1.2em;
   margin-left: 20px;
   color: #fff;
   margin-top: 10vh;

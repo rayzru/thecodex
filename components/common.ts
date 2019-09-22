@@ -13,7 +13,8 @@ export const Title = styled.h1`
   color: #eee;
   font-family: 'Oswald';
   text-align: center;
-  width: 100%;
+  margin: 0 auto;
+  width: 80%;
   text-shadow: -1px -1px 1px rgba(0,0,0,.3);
   transition: .5s all;
   &:hover { color: #fff; }

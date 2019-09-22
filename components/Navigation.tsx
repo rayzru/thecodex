@@ -11,14 +11,18 @@ interface Props {
 }
 
 const Navigation: React.FunctionComponent<Props> = ({ page, totalPages, slug }) => {
-  if (slug) return (
-    <Wrapper>
-      <Link href={'/'} as={'/'} passHref>
-        <Arrow>&uarr;</Arrow>
-      </Link>
-    </Wrapper>
-  );
+  if (slug) {
+    return (
+      <Wrapper>
+        <Link href={'/'} as={'/'} passHref>
+          <Arrow>&uarr;</Arrow>
+        </Link>
+      </Wrapper>
+    );
+  }
+
   if (totalPages === 1) return (<Wrapper />);
+
   return (
     <Wrapper>
       {page > 1 ? (<Link href={{ query: { page: page - 1 } }} as={'/'} passHref><Arrow>&larr;</Arrow></Link>) : (<DisabledArrow>&larr;</DisabledArrow>)}

@@ -23,6 +23,7 @@
     "prismic-dom": "^2.1.0",
     "prismic-javascript": "^2.1.1",
     "prismic-reactjs": "^1.1.1",
+    "prismic-richtext": "^1.0.3",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "styled-components": "^4.3.2"

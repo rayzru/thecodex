@@ -1,8 +1,8 @@
 import { NextPageContext } from 'next';
-import { RichText } from 'prismic-dom';
 import Prismic from 'prismic-javascript';
 import { PRISMIC_API_URL } from '../config/prismic';
 import pagination from './pagination';
+import statement from './statement';
 
 export enum Languages {
   en = 'en-us',
@@ -58,15 +58,12 @@ export class PrismicClient {
 
   getStatements = async (options: any = {}) => (
     this.allByType('statement', { orderings: '[document.last_publication_date desc]', page: 1, pageSize: 1, ...options })
-      .then((res: any) => res.results[0])
       .then((res: any) => handleStatementResult(res))
   );
 
   getStatement = async (slug) => (
     this.allByType('statement', {}, [Prismic.Predicates.at('my.statement.uid', slug)])
-      .then((res: any) => res.results[0])
       .then((res: any) => handleStatementResult(res))
-      .catch(error => { throw new Error('Unknown Link'); console.log(error); })
   );
 
   getAbout = async () => (
@@ -78,8 +75,6 @@ export class PrismicClient {
 export const prismicClient = (context: NextPageContext, locale?: Languages) => new PrismicClient(context, locale);
 
 const handleStatementResult = (statementResponse) => ({
-  id: statementResponse.id,
-  uid: statementResponse.uid,
-  title: RichText.asText(statementResponse.data.title),
-  description: RichText.asHtml(statementResponse.data.description)
+  statements: statementResponse.results.map((s: any) => statement(s)),
+  pagination: statementResponse.pagination,
 });

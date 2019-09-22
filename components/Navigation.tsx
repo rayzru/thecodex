@@ -9,7 +9,7 @@ interface Props {
 }
 
 const Navigation: React.FunctionComponent<Props> = ({ pagination: { page, totalPages } }) => {
-  if (totalPages === 1) return null;
+  if (totalPages === 1) return undefined;
   return (
     <Wrapper>
       {page > 1 ? (<Link href={{ query: { page: page - 1 } }} as={'/'} passHref><Arrow>&larr;</Arrow></Link>) : (<DisabledArrow>&larr;</DisabledArrow>)}

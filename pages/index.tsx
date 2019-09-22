@@ -21,7 +21,6 @@ const Index = ({ statements: [{ title, uid }], pagination, locale }) => (
 );
 
 Index.getInitialProps = async ({ req, ctx, query }) => {
-  console.log(query)
   const locale = (req) ? Languages.en : cookie.get('locale') as Languages || Languages.en;
   const client = prismicClient(ctx, locale);
   const statement = query.slug ? await client.getStatement(query.slug) : await client.getStatements({ page: query.page || 1 });

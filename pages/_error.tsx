@@ -11,9 +11,11 @@ const ErrorPage = () => (
   </Layout >
 );
 
-ErrorPage.getInitialProps = async ({ req, err }) => ({
-  statusCode: req ? req.statusCode : err ? err.statusCode : 404
-});
+ErrorPage.getInitialProps = async ({ req, err }) => {
+  return {
+    statusCode: req ? req.statusCode : err ? err.statusCode : 404
+  };
+};
 
 export default ErrorPage;
 

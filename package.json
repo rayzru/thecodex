@@ -8,7 +8,7 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "dev": "./node_modules/.bin/next",
+    "dev": "./node_modules/.bin/now dev",
     "build": "./node_modules/.bin/next build",
     "now-build": "./node_modules/.bin/next build",
     "start": "./node_modules/.bin/next start",
@@ -48,6 +48,7 @@
     "husky": "^3.0.7",
     "jest": "^24.9.0",
     "next": "^9.0.6",
+    "now": "^16.2.0",
     "react-addons-test-utils": "^15.6.2",
     "react-test-renderer": "^16.10.0",
     "ts-jest": "^24.1.0",

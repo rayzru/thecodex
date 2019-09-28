@@ -3,29 +3,29 @@
   "version": 2,
   "builds": [
     {
-      "src": "static/*",
+      "src": "static/**",
       "use": "@now/static"
     },
     {
-      "src": "next.config.js",
+      "src": "package.json",
       "use": "@now/next"
     }
   ],
   "routes": [
     {
       "src": "^/favicon.ico$",
-      "dest": "/static/favicon.ico"
+      "dest": "/static/favicon/favicon.ico"
+    },
+    {
+      "src": "^/static/(.*)",
+      "dest": "/static/$1"
     },
     {
       "src": "/about"
     },
     {
-      "src": "/([^/]+)",
+      "src": "/([^/]+)$",
       "dest": "/index?slug=$1"
-    },
-    {
-      "src": "^/static/(.*)",
-      "dest": "/static/$1"
     }
   ]
 }

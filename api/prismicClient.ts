@@ -11,13 +11,15 @@ export enum Languages {
 
 export class PrismicClient {
   private url: string;
+  private ref: string;
   private client: any;
   private req: any;
   private locale: Languages = Languages.en;
 
-  constructor({ req = undefined } = {}, locale = Languages.en) {
+  constructor({ req = undefined } = {}, locale = Languages.en, ref = undefined) {
     this.url = PRISMIC_API_URL;
     this.req = req;
+    this.ref = ref;
     this.locale = locale;
   }
 
@@ -32,7 +34,7 @@ export class PrismicClient {
     .then((api: any) => (api.query(predicates, { ...options, lang: this.locale })))
 
   allByType = (type: string, options = {}, predicates = []) => (
-    this.query([Prismic.Predicates.at('document.type', type) as never, ...predicates], { ...options, lang: this.locale })
+    this.query([Prismic.Predicates.at('document.type', type) as never, ...predicates], { ...options, lang: this.locale, ref: this.ref })
       .then((response: any) => ({ pagination: pagination(response), results: response.results }))
   )
 
@@ -42,18 +44,18 @@ export class PrismicClient {
       strict
         ? Prismic.Predicates.at('document.tags', Array.isArray(tags) ? [...tags] : [tags]) as never
         : Prismic.Predicates.any('document.tags', Array.isArray(tags) ? [...tags] : [tags]) as never,
-    ], { ...options, lang: this.locale })
+    ], { ...options, lang: this.locale, ref: this.ref })
   )
 
   oneByType = (type: string, uid: string, options?: any) => {
     if (!uid) return this.allByType(type, options);
-    return this.query(Prismic.Predicates.at(`my.${type}.uid`, uid) as never, { ...options, lang: this.locale })
+    return this.query(Prismic.Predicates.at(`my.${type}.uid`, uid) as never, { ...options, lang: this.locale, ref: this.ref })
       .then((results: any) => results[0]);
   }
 
   single = (type: string, options?: any) => (
     this.api
-      .then((api: any) => api.getSingle(type, { ...options, lang: this.locale }))
+      .then((api: any) => api.getSingle(type, { ...options, lang: this.locale, ref: this.ref, }))
   );
 
   getStatements = async (options: any = {}) => (

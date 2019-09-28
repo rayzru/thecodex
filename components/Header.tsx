@@ -26,15 +26,15 @@ const Header: React.FunctionComponent<WithLocaleProp> = ({ locale, router: { pat
     {!slug && pathname === '/'
       ? <LogoBlock locale={locale} />
       : (
-        <Link href={'/'} as={'/'} passHref>
+        <Link href={`/index?locale=${locale}`} as={`/${locale}`} passHref>
           <StyledLink>
             <LogoBlock locale={locale} />
           </StyledLink>
         </Link>)
     }
     <Menu>
-      <Link href={'/about'} as={'/about'} passHref>
-        <MenuItem className={pathname === '/about' ? 'active' : 'inactive'}>?</MenuItem>
+      <Link href={`/about?locale=${locale}`} as={`/${locale}/about`} passHref>
+        <MenuItem className={pathname.includes('/about') ? 'active' : 'inactive'}>?</MenuItem>
       </Link>
     </Menu>
     <LanguageSwitcher locale={locale}></LanguageSwitcher>
@@ -70,7 +70,7 @@ const Logo = styled.div`
 const Menu = styled.div`
   flex: 1;
   margin-left: 20px;
-  margin-right: 20px;
+  margin-right: 0px;
 `;
 
 const MenuItem = styled.a`
@@ -78,8 +78,8 @@ const MenuItem = styled.a`
   display: block;
   color: #ccc;
   text-align: center;
-  width: 30px;
   text-decoration: none;
+  width: 30px;
   height: 30px;
   line-height: 30px;
   font-family: 'Oswald', sans-serif;
@@ -105,5 +105,4 @@ const MenuItem = styled.a`
       border-color: rgba(255,255,255,.1);
     }
   }
-
 `;

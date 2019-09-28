@@ -21,11 +21,16 @@
       "dest": "/static/$1"
     },
     {
-      "src": "/about"
+      "src": "/([^/]+)/about",
+      "dest": "/about?locale=$1"
     },
     {
       "src": "/([^/]+)$",
-      "dest": "/index?slug=$1"
+      "dest": "/index?locale=$1"
+    },
+    {
+      "src": "/([^/]+)/([^/]+)$",
+      "dest": "/index?locale=$1&slug=$2"
     }
   ]
 }

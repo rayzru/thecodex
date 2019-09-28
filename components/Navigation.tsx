@@ -10,11 +10,11 @@ interface Props {
   slug: string;
 }
 
-const Navigation: React.FunctionComponent<Props> = ({ page, totalPages, slug }) => {
+const Navigation: React.FunctionComponent<Props> = ({ locale, page, totalPages, slug }) => {
   if (slug) {
     return (
       <Wrapper>
-        <Link href={'/index'} as={'/'} passHref>
+        <Link href={`/index?locale=${locale}`} as={`/${locale}`} passHref>
           <Arrow>&uarr;</Arrow>
         </Link>
       </Wrapper>
@@ -25,8 +25,8 @@ const Navigation: React.FunctionComponent<Props> = ({ page, totalPages, slug }) 
 
   return (
     <Wrapper>
-      {page > 1 ? (<Link href={{ pathname: '/index', query: { page: page - 1 } }} as={'/'} passHref><Arrow>&larr;</Arrow></Link>) : (<DisabledArrow>&larr;</DisabledArrow>)}
-      {page < totalPages ? (<Link href={{ pathname: '/index', query: { page: page + 1 } }} as={'/'} passHref><Arrow>&rarr;</Arrow></Link>) : (<DisabledArrow>&rarr;</DisabledArrow>)}
+      {page > 1 ? (<Link href={{ pathname: '/index', query: { page: page - 1, locale } }} as={`/${locale}`} passHref><Arrow>&larr;</Arrow></Link>) : (<DisabledArrow>&larr;</DisabledArrow>)}
+      {page < totalPages ? (<Link href={{ pathname: '/index', query: { page: page + 1, locale } }} as={`/${locale}`} passHref><Arrow>&rarr;</Arrow></Link>) : (<DisabledArrow>&rarr;</DisabledArrow>)}
     </Wrapper>
   );
 };

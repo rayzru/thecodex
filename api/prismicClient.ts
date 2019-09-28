@@ -9,6 +9,16 @@ export enum Languages {
   ru = 'ru'
 }
 
+export class ResponseError extends Error {
+  public status: number;
+  public statusText: string;
+  constructor({ status, statusText }) {
+    super(`HTTP Error: [${status}] ${statusText}`);
+    this.status = status;
+    this.statusText = statusText;
+  }
+}
+
 export class PrismicClient {
   private url: string;
   private ref: string;
@@ -76,7 +86,27 @@ export class PrismicClient {
 
 export const prismicClient = (context: NextPageContext, locale?: Languages) => new PrismicClient(context, locale);
 
-const handleStatementResult = (statementResponse) => ({
-  statements: statementResponse.results.map((s: any) => statement(s)),
-  pagination: statementResponse.pagination,
-});
+const handleStatementResult = (statementResponse) => {
+  if (Number(statementResponse.pagination.totalSize) === 0 || statementResponse.results.length === 0) {
+    throw new ResponseError({ status: 404, statusText: 'Not Found' });
+  } else {
+    return {
+      statements: statementResponse.results.map((s: any) => statement(s)),
+      pagination: statementResponse.pagination,
+    };
+  }
+};
+
+export function linkResolver(doc) {
+  if (!doc) return `/`;
+  if (doc.type === 'about') return `/${doc.lang}/about`;
+  if (doc.type === 'statement') return `/${doc.lang}/${doc.uid}`;
+  return '/';
+}
+
+export function hrefResolver(doc) {
+  if (!doc) return '/index';
+  if (doc.type === 'about') return '/about?locale=' + doc.lang;
+  if (doc.type === 'statement') return `/index?slug=${doc.uid}&locale=${doc.lang}`;
+  return '/index';
+}

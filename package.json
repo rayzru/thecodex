@@ -30,6 +30,7 @@
     "react-dom": "16.9.0",
     "react-hotkeys-hook": "^1.5.3",
     "react-swipeable": "^5.4.0",
+    "shade-blend-color": "^1.0.0",
     "styled-components": "^4.4.0"
   },
   "devDependencies": {

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Languages } from '../api/prismicClient';
+import { darken, randomColor } from '../lib/helpers';
 import Footer from './Footer';
 import Header from './Header';
 
@@ -9,7 +10,7 @@ interface Props {
 }
 
 const Layout: React.FunctionComponent<Props> = ({ locale, children }) => (
-  <Wrapper>
+  <Wrapper color={randomColor()} className='layoutWrapper'>
     <Header locale={locale} />
     {children}
     <Footer />
@@ -20,7 +21,8 @@ export default Layout;
 
 const Wrapper = styled.div`
   height: 100vh;
-  background-color: #8091a5;
+  background-image: radial-gradient(${props => props.color}, ${props => darken(props.color)});
+  background-size: 110% 110%;
   display: flex;
   flex-flow: column nowrap;
 `;

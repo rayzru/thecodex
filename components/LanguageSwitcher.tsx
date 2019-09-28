@@ -30,7 +30,6 @@ const setCookie = (locale: Languages) => {
 };
 
 const Wrapper = styled.div`
-  background-color: #8091a5;
   display: flex;
   flex-flow: row nowrap;
 `;

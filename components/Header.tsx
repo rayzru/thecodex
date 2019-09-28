@@ -56,7 +56,7 @@ const Logo = styled.div`
   flex: 0;
   margin-left: 20px;
   text-transform: uppercase;
-  letter-spacing: .4em;
+  // letter-spacing: .4em;
   font-family: 'Oswald', sans-serif;
   font-size: 20px;
   font-weight: 400;

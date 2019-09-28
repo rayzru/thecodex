@@ -44,8 +44,12 @@ export default class MyDocument extends Document {
           <meta charSet='utf-8' />
           <meta name='viewport' content='initial-scale=1.0, width=device-width' key='viewport' />
 
-          <link href='https:/fonts.googleapis.com/css?family=Oswald:400,800&display=swap&subset=cyrillic' rel='stylesheet' />
-          <link href='https:/fonts.googleapis.com/css?family=Montserrat:400,800&display=swap&subset=cyrillic' rel='stylesheet' />
+          <meta name='msapplication-TileColor' content='#ffffff' />
+          <meta name='msapplication-TileImage' content='/static/favicon/ms-icon-144x144.png' />
+          <meta name='theme-color' content='#ffffff' />
+
+          <link href='https://fonts.googleapis.com/css?family=Oswald:400,800&display=swap&subset=cyrillic' rel='stylesheet' />
+          <link href='https://fonts.googleapis.com/css?family=Montserrat:400,800&display=swap&subset=cyrillic' rel='stylesheet' />
 
           <link rel='apple-touch-icon' sizes='57x57' href='/static/favicon/apple-icon-57x57.png' />
           <link rel='apple-touch-icon' sizes='60x60' href='/static/favicon/apple-icon-60x60.png' />
@@ -61,9 +65,7 @@ export default class MyDocument extends Document {
           <link rel='icon' type='image/png' sizes='96x96' href='/static/favicon/favicon-96x96.png' />
           <link rel='icon' type='image/png' sizes='16x16' href='/static/favicon/favicon-16x16.png' />
           <link rel='manifest' href='/static/favicon/manifest.json' />
-          <meta name='msapplication-TileColor' content='#ffffff' />
-          <meta name='msapplication-TileImage' content='/static/favicon/ms-icon-144x144.png' />
-          <meta name='theme-color' content='#ffffff' />
+
 
         </Head>
         <body>

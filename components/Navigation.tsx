@@ -58,6 +58,6 @@ const Arrow = styled(PaginationControl)`
 `;
 
 const DisabledArrow = styled(PaginationControl)`
-  color: #ccc;
+  color: rgba(255,255,255,.2);
 `;
 

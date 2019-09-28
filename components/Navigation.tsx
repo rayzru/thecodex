@@ -14,7 +14,7 @@ const Navigation: React.FunctionComponent<Props> = ({ page, totalPages, slug }) 
   if (slug) {
     return (
       <Wrapper>
-        <Link href={'/'} as={'/'} passHref>
+        <Link href={'/index'} as={'/'} passHref>
           <Arrow>&uarr;</Arrow>
         </Link>
       </Wrapper>
@@ -25,8 +25,8 @@ const Navigation: React.FunctionComponent<Props> = ({ page, totalPages, slug }) 
 
   return (
     <Wrapper>
-      {page > 1 ? (<Link href={{ query: { page: page - 1 } }} as={'/'} passHref><Arrow>&larr;</Arrow></Link>) : (<DisabledArrow>&larr;</DisabledArrow>)}
-      {page < totalPages ? (<Link href={{ query: { page: page + 1 } }} as={'/'} passHref><Arrow>&rarr;</Arrow></Link>) : (<DisabledArrow>&rarr;</DisabledArrow>)}
+      {page > 1 ? (<Link href={{ pathname: '/index', query: { page: page - 1 } }} as={'/'} passHref><Arrow>&larr;</Arrow></Link>) : (<DisabledArrow>&larr;</DisabledArrow>)}
+      {page < totalPages ? (<Link href={{ pathname: '/index', query: { page: page + 1 } }} as={'/'} passHref><Arrow>&rarr;</Arrow></Link>) : (<DisabledArrow>&rarr;</DisabledArrow>)}
     </Wrapper>
   );
 };

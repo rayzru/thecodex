@@ -1,4 +1,5 @@
 import cookie from 'js-cookie';
+import Head from 'next/head';
 import Link from 'next/link';
 import Router from 'next/router';
 import * as React from 'react';
@@ -8,10 +9,9 @@ import { Languages, prismicClient } from '../api/prismicClient';
 import { Description, Statement, StyledLink, Title } from '../components/common';
 import Layout from '../components/Layout';
 import Navigation from '../components/Navigation';
+import { getProjectTitle } from '../lib/helpers';
 
 const Index = ({ statements: [{ title, uid }], pagination: { page, totalPages }, locale, slug }) => {
-
-  console.log(slug);
 
   const nextPage = () => Router.push({ pathname: Router.pathname, query: { page: page + (page > 1 ? -1 : 0) } }, '/');
   const prevPage = () => Router.push({ pathname: Router.pathname, query: { page: page + (page < totalPages ? 1 : 0) } }, '/');
@@ -45,11 +45,14 @@ const Index = ({ statements: [{ title, uid }], pagination: { page, totalPages },
 
   return (
     <Layout locale={locale} >
+      <Head>
+        <title>{title}{' — '}{getProjectTitle(locale)}</title>
+      </Head>
       <Statement {...handlers}>
         {slug
           ? (<Title>{title}</Title>)
           : (
-            <Link href={`/?slug=${uid}`} as={`/${uid}`} passHref>
+            <Link href={`/index?slug=${uid}`} as={`/${uid}`} passHref>
               <StyledLink>
                 <Title>{title}</Title>
               </StyledLink>

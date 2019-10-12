@@ -41,7 +41,7 @@ const Index = ({ statements, pagination, locale, slug }) => {
   return (
     <Layout locale={locale} >
       <Head>
-        <title>{title}{' * '}{getProjectTitle(locale)}</title>
+        <title>{title}{' - '}{getProjectTitle(locale)}</title>
       </Head>
       <Statement {...handlers}>
         {slug

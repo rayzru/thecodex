@@ -2,7 +2,9 @@ import * as React from 'react';
 import styled from '@emotion/styled';
 import { asText } from '@prismicio/helpers';
 import { FilledLinkToDocumentField, PrismicDocument } from '@prismicio/types';
+import Footer from 'components/Footer';
 import Header from 'components/Header';
+import Layout from 'components/Layout';
 import { SiteSettings } from 'lib/settings';
 import { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
@@ -17,7 +19,7 @@ interface Props {
 
 const Index: NextPage<Props> = ({ statements = [], settings, locale }) => {
   return (
-    <>
+    <Layout>
       <Head>
         <title>{settings.title}</title>
       </Head>
@@ -40,7 +42,8 @@ const Index: NextPage<Props> = ({ statements = [], settings, locale }) => {
           );
         })}
       </StatementList>
-    </>
+      <Footer />
+    </Layout>
   );
 };
 

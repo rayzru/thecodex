@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
+
+import Link from './Link';
 
 interface Props {
   title: string;
@@ -11,30 +12,15 @@ const Header: React.FunctionComponent<Props> = ({ title }) => {
   const dotTitle = title.split(' ').join(String.fromCharCode(183));
 
   return (
-    <Wrapper>
-      {pathname === '/' ? (
-        <Logo>{dotTitle}</Logo>
-      ) : (
-        <Link href={'/'} passHref>
-          <StyledLink>
-            <Logo>{dotTitle}</Logo>
-          </StyledLink>
-        </Link>
-      )}
-    </Wrapper>
+    <Logo href={'/'} disabled={pathname === '/'}>
+      {dotTitle}
+    </Logo>
   );
 };
 
 export default Header;
 
-const Wrapper = styled.header`
-  flex: 0;
-  display: flex;
-  flex-flow: row nowrap;
-`;
-
-const Logo = styled.div`
-  flex: 1;
+const Logo = styled(Link)`
   margin: 2em auto;
   text-align: center;
   text-transform: uppercase;
@@ -44,13 +30,7 @@ const Logo = styled.div`
   white-space: nowrap;
   color: #eeeeee50;
   transition: color 0.2s ease;
-`;
-
-export const StyledLink = styled.a`
-  text-decoration: none;
-  text-align: center;
-  width: 100%;
-  &:hover > div {
-    color: #fff;
+  &:hover {
+    text-decoration: none;
   }
 `;

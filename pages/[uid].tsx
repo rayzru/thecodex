@@ -3,12 +3,14 @@ import styled from '@emotion/styled';
 import { BuildQueryURLArgs, predicate } from '@prismicio/client';
 import { asText } from '@prismicio/helpers';
 import { PrismicDocument } from '@prismicio/types';
+import Footer from 'components/Footer';
 import Header from 'components/Header';
 import Heading from 'components/Heading';
+import Layout from 'components/Layout';
+import Link from 'components/Link';
 import { SiteSettings } from 'lib/settings';
 import { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { createClient, languages, linkResolver } from 'prismicio';
 
@@ -77,29 +79,19 @@ const Statement: NextPage<Props> = ({
         <NavigationRow>
           {statement.alternate_languages &&
             statement.alternate_languages.map((l) => (
-              <Link key={l.uid} href={linkResolver(l)} passHref locale={l.lang}>
-                <Lang>
-                  {l.lang === 'en-us' ? languages['en-us'] : languages['ru']}
-                </Lang>
+              <Link key={l.uid} href={linkResolver(l)} locale={l.lang}>
+                {l.lang === 'en-us' ? languages['en-us'] : languages['ru']}
               </Link>
             ))}
         </NavigationRow>
         <NavigationRow>
-          {prevLink !== '' && prevLink !== '/' ? (
-            <Link href={prevLink} passHref>
-              <NavLink>{String.fromCharCode(8592)}</NavLink>
-            </Link>
-          ) : (
-            <NavLinkBlank>{String.fromCharCode(8592)}</NavLinkBlank>
-          )}
+          <BigLink href={prevLink} disabled={prevLink === '/'}>
+            {String.fromCharCode(8592)}
+          </BigLink>
 
-          {nextLink !== '' && nextLink !== '/' ? (
-            <Link href={nextLink} passHref>
-              <NavLink>{String.fromCharCode(8594)}</NavLink>
-            </Link>
-          ) : (
-            <NavLinkBlank>{String.fromCharCode(8594)}</NavLinkBlank>
-          )}
+          <BigLink href={nextLink} disabled={nextLink === '/'}>
+            {String.fromCharCode(8594)}
+          </BigLink>
         </NavigationRow>
       </Footer>
     </Layout>
@@ -107,18 +99,6 @@ const Statement: NextPage<Props> = ({
 };
 
 export default Statement;
-
-const Layout = styled.div`
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  min-height: 100vh;
-`;
-
-const Footer = styled.footer`
-  margin-top: auto;
-  margin-bottom: 4em;
-`;
 
 const NavigationRow = styled.nav`
   display: flex;
@@ -128,36 +108,12 @@ const NavigationRow = styled.nav`
   margin: 2em 0;
 `;
 
-const NavLink = styled.a`
-  text-decoration: none;
-
-  font-size: 2em;
+const BigLink = styled(Link)`
+  font-size: 30px !important;
   font-weight: 200;
   font-family: Arial, sans-serif;
-  color: #eeeeee99;
-  transition: 0.3s all;
   &:hover {
-    color: #fff;
-  }
-`;
-
-const NavLinkBlank = styled.span`
-  font-size: 2em;
-  font-weight: 200;
-  font-family: Arial, sans-serif;
-  color: #eeeeee33;
-`;
-
-const Lang = styled.a`
-  font-size: 0.6em;
-  text-transform: uppercase;
-  text-decoration: none;
-  font-weight: 400;
-  font-family: Oswald, sans-serif;
-  color: #eeeeee99;
-  transition: 0.3s all;
-  &:hover {
-    color: #fff;
+    text-decoration: none;
   }
 `;
 

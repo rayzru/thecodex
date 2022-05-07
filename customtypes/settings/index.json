@@ -1,0 +1,18 @@
+{
+  "id": "settings",
+  "label": "Settings",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "Main": {
+      "title": {
+        "type": "StructuredText",
+        "config": {
+          "single": "heading1",
+          "label": "title",
+          "placeholder": "Project Title"
+        }
+      }
+    }
+  }
+}

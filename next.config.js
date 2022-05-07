@@ -1,8 +1,28 @@
-const path = require('path')
-const withReactSvg = require('next-react-svg')
-const withSourceMaps = require('@zeit/next-source-maps')()
+const prismic = require('@prismicio/client');
 
-module.exports = withSourceMaps(withReactSvg({
-  target: 'serverless',
-  include: path.resolve(__dirname, '/static/icons'),
-}));
+const sm = require('./sm.json');
+
+const path = require('path');
+
+module.exports = {
+  i18n: {
+    locales: ['en-us', 'ru'],
+    defaultLocale: 'ru',
+    localeDetection: true,
+  },
+  // trailingSlash: true,
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: [
+        {
+          loader: '@svgr/webpack',
+          options: { svgo: false },
+        },
+      ],
+    });
+    return config;
+  },
+  poweredByHeader: false,
+  productionBrowserSourceMaps: true,
+};

@@ -1,25 +1,44 @@
-import App from 'next/app';
 import React from 'react';
-import { ThemeProvider } from 'styled-components';
-import { theme } from '../config/theme';
-import Defaults from '../styles/default';
-import Reset from '../styles/reset';
-import ErrorPage from './_error';
+import { EmotionCache } from '@emotion/cache';
+import { CacheProvider, Global } from '@emotion/react';
+import { PrismicPreview } from '@prismicio/next';
+import { PrismicProvider } from '@prismicio/react';
+import createEmotionCache from 'createEmotionCache';
+import { AppProps } from 'next/app';
+import Link from 'next/link';
+import { linkResolver, repositoryName } from 'prismicio';
 
-export default class extends App {
-  public render() {
-    const { Component, pageProps }: any = this.props;
-    const { error, statusCode } = pageProps;
-    if (statusCode || error) return <ErrorPage />;
+import Default from '../styles/default';
+// import Reset from '../styles/reset';
 
-    return (
-      <>
-        <Reset />
-        <Defaults />
-        <ThemeProvider theme={theme}>
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </>
-    );
-  }
+const clientSideEmotionCache = createEmotionCache();
+
+interface EmotionAppProps extends AppProps {
+  emotionCache?: EmotionCache;
 }
+
+const App = ({
+  Component,
+  pageProps,
+  emotionCache = clientSideEmotionCache,
+}: EmotionAppProps) => {
+  return (
+    <CacheProvider value={emotionCache}>
+      <Global styles={Default} />
+      <PrismicProvider
+        linkResolver={linkResolver}
+        internalLinkComponent={({ href, children, ...props }) => (
+          <Link href={href}>
+            <a {...props}>{children}</a>
+          </Link>
+        )}
+      >
+        <PrismicPreview repositoryName={repositoryName}>
+          <Component {...pageProps} />
+        </PrismicPreview>
+      </PrismicProvider>
+    </CacheProvider>
+  );
+};
+
+export default App;

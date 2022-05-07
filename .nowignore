@@ -3,13 +3,9 @@
 /dist
 /.next
 README.md
-yarn.lock
 /coverage
-/tests
 *.snap
 __snapshots__
 .DS_Store
 .env
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*

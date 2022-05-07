@@ -1,0 +1,36 @@
+{
+  "id": "about",
+  "label": "About",
+  "repeatable": false,
+  "hash": "6d0bc181ef26575d752118bc25e6b731",
+  "status": true,
+  "json": {
+    "Main": {
+      "body": {
+        "type": "Slices",
+        "fieldset": "Slice Zone",
+        "config": {
+          "choices": {
+            "text": {
+              "type": "Slice",
+              "fieldset": "Text",
+              "description": "Rich Text Section",
+              "icon": "text_fields",
+              "non-repeat": {
+                "text": {
+                  "type": "StructuredText",
+                  "config": {
+                    "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,o-list-item",
+                    "label": "text",
+                    "placeholder": "Your content here"
+                  }
+                }
+              },
+              "repeat": {}
+            }
+          }
+        }
+      }
+    }
+  }
+}

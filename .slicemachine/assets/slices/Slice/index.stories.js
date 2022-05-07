@@ -1,0 +1,9 @@
+import MyComponent from '../../../../slices/Slice';
+
+export default {
+  title: 'slices/Slice'
+}
+
+
+export const _Default = () => <MyComponent slice={{"variation":"default","name":"Default","slice_type":"slice","items":[],"primary":{"title":[{"type":"heading1","text":"Unleash global networks","spans":[]}],"description":[{"type":"paragraph","text":"Amet non reprehenderit tempor enim quis fugiat veniam laboris tempor nostrud elit ullamco. Enim qui nisi qui minim. Sint sunt officia ad aute exercitation.","spans":[]}]},"id":"_Default"}} />
+_Default.storyName = 'Default'

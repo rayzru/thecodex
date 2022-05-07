@@ -1,0 +1,82 @@
+{
+  "slices": {
+    "components": {
+      "dummy": {
+        "library": "slices",
+        "id": "dummy",
+        "name": "Dummy",
+        "description": "Dummy",
+        "model": {
+          "id": "dummy",
+          "type": "SharedSlice",
+          "name": "Dummy",
+          "description": "Dummy",
+          "variations": [
+            {
+              "id": "default",
+              "name": "Default",
+              "docURL": "...",
+              "version": "sktwi1xtmkfgx8626",
+              "description": "Dummy",
+              "primary": {
+                "title": {
+                  "type": "StructuredText",
+                  "config": {
+                    "single": "heading1",
+                    "label": "Title",
+                    "placeholder": "This is where it all begins..."
+                  }
+                },
+                "description": {
+                  "type": "StructuredText",
+                  "config": {
+                    "single": "paragraph",
+                    "label": "Description",
+                    "placeholder": "A nice description of your feature"
+                  }
+                }
+              },
+              "items": {},
+              "imageUrl": "https://images.prismic.io/slice-machine/621a5ec4-0387-4bc5-9860-2dd46cbc07cd_default_ss.png?auto=compress,format"
+            }
+          ]
+        },
+        "mocks": {
+          "default": {
+            "variation": "default",
+            "name": "Default",
+            "slice_type": "dummy",
+            "items": [],
+            "primary": {
+              "title": [
+                {
+                  "type": "heading1",
+                  "text": "Deploy best-of-breed synergies",
+                  "spans": []
+                }
+              ],
+              "description": [
+                {
+                  "type": "paragraph",
+                  "text": "Do amet adipisicing id ad officia excepteur adipisicing proident magna dolore et non adipisicing.",
+                  "spans": []
+                }
+              ]
+            }
+          }
+        },
+        "meta": {
+          "fileName": "index",
+          "extension": "js"
+        },
+        "screenshotPaths": {
+          "default": {
+            "path": "/Users/rumm/thecodex/.slicemachine/assets/slices/Dummy/default/preview.png",
+            "width": 800,
+            "height": 94
+          }
+        }
+      }
+    }
+  }
+}

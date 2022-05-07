@@ -1,0 +1,52 @@
+{
+  "id": "statement",
+  "label": "Statement",
+  "repeatable": true,
+  "hash": "5ab675bc75837ba6f326184576d5a5ff",
+  "status": true,
+  "json": {
+    "Main": {
+      "uid": {
+        "type": "UID",
+        "config": {
+          "label": "uid",
+          "placeholder": "Slug"
+        }
+      },
+      "title": {
+        "type": "StructuredText",
+        "config": {
+          "single": "heading1",
+          "label": "Title",
+          "placeholder": "Title"
+        }
+      },
+      "description": {
+        "type": "StructuredText",
+        "config": {
+          "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,o-list-item",
+          "label": "Description"
+        }
+      },
+      "related": {
+        "type": "Group",
+        "config": {
+          "fields": {
+            "statement": {
+              "type": "Link",
+              "config": {
+                "select": "document",
+                "customtypes": [
+                  "statement"
+                ],
+                "label": "statement",
+                "placeholder": "Select related statemens"
+              }
+            }
+          },
+          "label": "Related"
+        }
+      }
+    }
+  }
+}

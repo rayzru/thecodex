@@ -1,85 +1,103 @@
-import cookie from 'js-cookie';
+import * as React from 'react';
+import styled from '@emotion/styled';
+import { asText } from '@prismicio/helpers';
+import { FilledLinkToDocumentField, PrismicDocument } from '@prismicio/types';
+import Header from 'components/Header';
+import { SiteSettings } from 'lib/settings';
+import { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
-import Router from 'next/router';
-import { RichText } from 'prismic-reactjs';
-import * as React from 'react';
-import { useHotkeys } from 'react-hotkeys-hook';
-import { useSwipeable } from 'react-swipeable';
-import { Languages, linkResolver, prismicClient, ResponseError } from '../api/prismicClient';
-import { Description, Statement, StyledLink, Title } from '../components/common';
-import Layout from '../components/Layout';
-import Navigation from '../components/Navigation';
-import { getProjectTitle } from '../lib/helpers';
-import ErrorPage from './_error';
+import { createClient, linkResolver } from 'prismicio';
 
-const Index = ({ statements, pagination, locale, slug }) => {
+interface Props {
+  statements: PrismicDocument[];
+  settings: SiteSettings;
+  locale: string;
+}
 
-  if (!statements || statements.length === 0) {
-    return <ErrorPage />;
-  }
-
-  const [{ title, uid, description }] = statements;
-  const { page, totalPages } = pagination;
-
-  const homePage = () => Router.push({ pathname: '/', query: { locale } }, '/');
-  const nextPage = () => Router.push({ pathname: Router.pathname, query: { locale, page: page + (page > 1 ? -1 : 0) } }, `/${locale}`);
-  const prevPage = () => Router.push({ pathname: Router.pathname, query: { locale, page: page + (page < totalPages ? 1 : 0) } }, `/${locale}`);
-
-  const handlers = useSwipeable({
-    onSwipedUp: () => slug ? {} : homePage(),
-    onSwipedLeft: () => slug ? {} : prevPage(),
-    onSwipedRight: () => slug ? {} : nextPage(),
-    preventDefaultTouchmoveEvent: true,
-    trackMouse: true
-  });
-  useHotkeys('up', () => slug ? {} : homePage());
-  useHotkeys('left', () => slug ? {} : prevPage());
-  useHotkeys('right', () => slug ? {} : nextPage());
-
-
+const Index: NextPage<Props> = ({ statements = [], settings, locale }) => {
   return (
-    <Layout locale={locale} >
+    <>
       <Head>
-        <title>{title}{' - '}{getProjectTitle(locale)}</title>
+        <title>{settings.title}</title>
       </Head>
-      <Statement {...handlers}>
-        {slug
-          ? (<Title>{title}</Title>)
-          : (
-            <Link href={`/index?slug=${uid}&locale=${locale}`} as={`/${locale}/${uid}`} passHref>
-              <StyledLink>
-                <Title>{title}</Title>
-              </StyledLink>
+      <Header title={settings.title} />
+      <StatementList>
+        {statements.map(({ uid: routeUid, type, data: { title } }) => {
+          const uid = routeUid?.toString() || '';
+          const link: FilledLinkToDocumentField<string, string, never> = {
+            uid,
+            type,
+            link_type: 'Document',
+            id: uid,
+            tags: [],
+            lang: locale,
+          };
+          return (
+            <Link key={uid} href={linkResolver(link)} passHref>
+              <StatementLink>{asText(title)}</StatementLink>
             </Link>
-          )
-        }
-        <Description>
-          <RichText render={description} linkResolver={linkResolver} />
-        </Description>
-      </Statement>
-      <Navigation page={page} totalPages={totalPages} slug={slug} locale={locale} />
-    </Layout >
+          );
+        })}
+      </StatementList>
+    </>
   );
 };
 
-Index.getInitialProps = async ({ req, res, ctx, query: { page, slug, locale } }) => {
-  const lang = locale ? locale : (req) ? Languages.en : cookie.get('locale') as Languages || Languages.en;
-  const client = prismicClient(ctx, lang);
+export default Index;
 
-  if (slug) {
-    const slugProps = await client.getStatement(slug)
-      .catch(err => {
-        if (err instanceof ResponseError) {
-          // console.log(err);
-          res.statusCode = 404;
-        }
-      });
-    return { ...slugProps, locale: lang, slug };
+const StatementList = styled.div`
+  display: flex;
+  flex-flow: column;
+  margin: 20px auto;
+  max-width: 800px;
+`;
+
+const StatementLink = styled.a`
+  text-decoration: none;
+  line-height: 2em;
+  font-size: 2em;
+  font-weight: 600;
+  color: #eee;
+  font-family: 'Oswald';
+  text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.3);
+  transition: 0.5s all;
+  display: inline-block;
+  &:hover {
+    color: #fff;
   }
 
-  const listProps = await client.getStatements({ page: page || 1 });
-  return { ...listProps, locale: lang };
-};
+  &:after {
+    content: ' ';
+    display: block;
+    width: 0;
+    transition: all 0.3s ease-out;
+    border-bottom: 2px solid #eeeeee55;
+  }
+  &:hover:after {
+    width: 100%;
+  }
+`;
 
-export default Index;
+export const getStaticProps: GetStaticProps = async ({
+  locale,
+  previewData,
+}) => {
+  const client = createClient({ previewData });
+  const opts = { lang: locale };
+
+  const settingsData = await client.getSingle('settings', opts);
+  const settings: SiteSettings = {
+    title: asText(settingsData.data.title) || 'The Codex',
+    locale,
+  };
+  const statements = await client.getAllByType('statement', { lang: locale });
+
+  return {
+    props: {
+      statements,
+      settings,
+      locale,
+    },
+  };
+};

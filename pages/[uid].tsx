@@ -29,35 +29,33 @@ const Statement: NextPage<Props> = ({
 }) => {
   const title = asText(statement.data.title);
   const router = useRouter();
-  const [key, setKey] = React.useState<string | undefined>();
+  const [queued, setQueued] = React.useState(false);
 
-  const handleKeydown: EventListener = (evt: KeyboardEventInit) => {
-    if (evt.key === 'ArrowLeft' || evt.key === 'ArrowRight') {
-      setKey(evt.key);
+  const handleRouteChange = async (link: string) => {
+    if (link !== '/') {
+      setQueued(true);
+      await router.push(link).finally(() => setQueued(false));
     }
   };
 
   React.useEffect(() => {
-    async function handleRouteChange(link: string) {
-      if (link !== '' && link !== '/') {
-        await router.push(link);
+    function onKeyDown(e: KeyboardEventInit) {
+      if (queued) {
+        return;
+      }
+      if (e.key === 'ArrowLeft') {
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        handleRouteChange(prevLink);
+      }
+      if (e.key === 'ArrowRight') {
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        handleRouteChange(nextLink);
       }
     }
 
-    if (key === 'ArrowLeft') {
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      handleRouteChange(prevLink);
-    }
-    if (key === 'ArrowRight') {
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      handleRouteChange(nextLink);
-    }
-  }, [key]);
-
-  React.useEffect(() => {
-    document.addEventListener('keydown', handleKeydown, false);
-    return () => window.removeEventListener('keydown', handleKeydown);
-  });
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, []);
 
   return (
     <Layout>

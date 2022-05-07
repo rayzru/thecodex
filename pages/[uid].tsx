@@ -31,34 +31,32 @@ const Statement: NextPage<Props> = ({
   const router = useRouter();
   const [queued, setQueued] = React.useState(false);
 
-  const handleRouteChange = async (link: string) => {
-    if (link !== '/') {
-      setQueued(true);
-      await router.push(link).finally(() => setQueued(false));
-    }
-  };
-
   React.useEffect(() => {
     function onKeyDown(e: KeyboardEventInit) {
       if (queued) {
         return;
       }
-      if (e.key === 'ArrowLeft') {
+      if (e.key === 'ArrowLeft' && prevLink !== '/') {
+        setQueued(true);
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        handleRouteChange(prevLink);
+        router.push(prevLink).finally(() => setQueued(false));
       }
-      if (e.key === 'ArrowRight') {
+      if (e.key === 'ArrowRight' && nextLink !== '/') {
+        setQueued(true);
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        handleRouteChange(nextLink);
+        router.push(nextLink).finally(() => setQueued(false));
       }
     }
 
     document.addEventListener('keydown', onKeyDown);
-    return () => document.removeEventListener('keydown', onKeyDown);
-  }, []);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [nextLink, prevLink, router, queued]);
 
   return (
     <Layout>
+      {queued && <Overlay />}
       <Head>
         <title>
           {title} {String.fromCharCode(9734)} {settings.title}
@@ -104,6 +102,13 @@ const NavigationRow = styled.nav`
   column-gap: 36px;
   justify-content: center;
   margin: 2em 0;
+`;
+
+const Overlay = styled.div`
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  background-color: #eeeeee44;
 `;
 
 const BigLink = styled(Link)`

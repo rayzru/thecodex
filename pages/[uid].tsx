@@ -78,7 +78,9 @@ const Statement: NextPage<Props> = ({
           {statement.alternate_languages &&
             statement.alternate_languages.map((l) => (
               <Link key={l.uid} href={linkResolver(l)} passHref locale={l.lang}>
-                <Lang>{languages[l.lang]}</Lang>
+                <Lang>
+                  {l.lang === 'en-us' ? languages['en-us'] : languages['ru']}
+                </Lang>
               </Link>
             ))}
         </NavigationRow>

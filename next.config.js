@@ -1,7 +1,3 @@
-const prismic = require('@prismicio/client');
-
-const sm = require('./sm.json');
-
 const path = require('path');
 
 module.exports = {

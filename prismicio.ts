@@ -5,9 +5,9 @@ import {
 import { CreateClientConfig, enableAutoPreviews } from '@prismicio/next';
 import { AlternateLanguage, PrismicDocument } from '@prismicio/types';
 
-import sm from './sm.json';
+export const apiEndpoint = 'https://thecodex.prismic.io/api/v2';
 
-export const repositoryName = getRepositoryName(sm.apiEndpoint);
+export const repositoryName = getRepositoryName(apiEndpoint);
 
 export const linkResolver = (
   doc?: Pick<PrismicDocument | AlternateLanguage, 'type' | 'lang' | 'uid'>
@@ -22,7 +22,7 @@ export const linkResolver = (
 };
 
 export const createClient = (config: CreateClientConfig = {}) => {
-  const client = prismicCreateClient(sm.apiEndpoint);
+  const client = prismicCreateClient(apiEndpoint);
 
   enableAutoPreviews({
     client,

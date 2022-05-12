@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import * as React from 'react';
 import styled from '@emotion/styled';
 import { BuildQueryURLArgs, predicate } from '@prismicio/client';
@@ -28,7 +30,7 @@ const Statement: NextPage<Props> = ({
   nextLink,
   prevLink,
 }) => {
-  const title = asText(statement.data.title);
+  const title = asText(statement?.data?.title);
   const router = useRouter();
   const [queued, setQueued] = React.useState(false);
 
@@ -66,11 +68,9 @@ const Statement: NextPage<Props> = ({
       <Header title={settings.title} />
 
       <PageWrapper>
-        <StyledHeading headingLevel="h1">
-          {asText(statement.data.title)}
-        </StyledHeading>
+        <StyledHeading headingLevel="h1">{title}</StyledHeading>
         <Description>
-          <PrismicRichText field={statement.data.description} />
+          <PrismicRichText field={statement?.data?.description} />
         </Description>
       </PageWrapper>
       <Footer>

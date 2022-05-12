@@ -8,9 +8,10 @@ export default class MyDocument extends Document {
     return (
       <Html>
         <Head>
+          <meta name="theme-color" content="#8091a5" />
           <link rel="icon" href="/favicon.svg" />
           <link
-            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Oswald:wght@200;400;600&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&family=Oswald:wght@200;400&display=swap"
             rel="stylesheet"
           />
         </Head>

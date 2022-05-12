@@ -2,6 +2,7 @@ import * as React from 'react';
 import styled from '@emotion/styled';
 import { BuildQueryURLArgs, predicate } from '@prismicio/client';
 import { asText } from '@prismicio/helpers';
+import { PrismicRichText } from '@prismicio/react';
 import { PrismicDocument } from '@prismicio/types';
 import Footer from 'components/Footer';
 import Header from 'components/Header';
@@ -56,7 +57,6 @@ const Statement: NextPage<Props> = ({
 
   return (
     <Layout>
-      {queued && <Overlay />}
       <Head>
         <title>
           {title} {String.fromCharCode(9734)} {settings.title}
@@ -69,7 +69,9 @@ const Statement: NextPage<Props> = ({
         <StyledHeading headingLevel="h1">
           {asText(statement.data.title)}
         </StyledHeading>
-        <Description>{asText(statement.data.description)}</Description>
+        <Description>
+          <PrismicRichText field={statement.data.description} />
+        </Description>
       </PageWrapper>
       <Footer>
         <NavigationRow>
@@ -100,15 +102,8 @@ const NavigationRow = styled.nav`
   display: flex;
   flex-flow: row nowrap;
   column-gap: 36px;
-  justify-content: center;
-  margin: 2em 0;
-`;
-
-const Overlay = styled.div`
-  position: absolute;
-  height: 100vh;
-  width: 100vw;
-  background-color: #eeeeee44;
+  margin: 4em 0;
+  color: eeeeee33;
 `;
 
 const BigLink = styled(Link)`
@@ -123,8 +118,6 @@ const BigLink = styled(Link)`
 const PageWrapper = styled.main`
   display: flex;
   flex-flow: column;
-  margin: 20px auto;
-  max-width: 800px;
 `;
 
 const StyledHeading = styled(Heading)`
@@ -132,18 +125,10 @@ const StyledHeading = styled(Heading)`
   font-weight: 600;
   color: #eee;
   font-family: 'Oswald';
-  text-align: center;
-  margin: 0 auto;
   text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.3);
 
-  @media only screen and (min-width: 768px) {
-    font-size: 5em;
-  }
   @media only screen and (max-width: 767px) {
     font-size: 4em;
-  }
-  @media only screen and (max-width: 767px) and (orientation: portrait) {
-    font-size: 3em;
   }
 `;
 
@@ -151,13 +136,12 @@ export const Description = styled.article`
   margin-top: 3em;
   font-size: 1em;
   line-height: 1.4em;
-  text-align: center;
   color: #eee;
   font-family: 'Montserrat', sans-serif;
   text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.3);
 
   a {
-    color: #cdf;
+    color: #def;
   }
 
   @media only screen and (min-width: 768px) {

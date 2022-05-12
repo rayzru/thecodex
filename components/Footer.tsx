@@ -44,7 +44,6 @@ const Credentials = styled.div`
   display: flex;
   flex-flow: row nowrap;
   column-gap: 36px;
-  justify-content: center;
-  margin: 2em 0;
+  margin: 7em 0 2em;
 `;
 export default Footer;

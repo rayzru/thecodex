@@ -21,8 +21,7 @@ const Header: React.FunctionComponent<Props> = ({ title }) => {
 export default Header;
 
 const Logo = styled(Link)`
-  margin: 2em auto;
-  text-align: center;
+  margin: 52px 0 44px;
   text-transform: uppercase;
   font-family: 'Oswald', sans-serif;
   font-size: 20px;

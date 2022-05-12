@@ -6,11 +6,19 @@ export default css`
   #__next {
     height: 100vh;
     padding: 0;
-    margin: 0;
+    margin: 0 auto;
+    user-select: none;
+  }
+  #__next {
+    padding: 0 16px;
+    max-width: 800px;
   }
   body {
     font-family: 'Montserrat', sans-serif;
     background-color: #8091a5;
+    background: linear-gradient(132deg, #8091a5, #3d4a59);
+    background-size: 2400% 2400%;
+    animation: Gradient 25s ease-in-out infinite;
     color: white;
   }
   h1,
@@ -19,5 +27,16 @@ export default css`
   h4,
   h5 {
     font-family: 'Oswald', sans-serif;
+  }
+  @keyframes Gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
 `;

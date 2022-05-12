@@ -52,33 +52,21 @@ export default Index;
 const StatementList = styled.div`
   display: flex;
   flex-flow: column;
-  margin: 20px auto;
-  max-width: 800px;
 `;
 
 const StatementLink = styled.a`
   text-decoration: none;
   line-height: 2em;
-  font-size: 2em;
-  font-weight: 600;
-  color: #eee;
+  font-size: 1.5em;
+  font-weight: 400;
   font-family: 'Oswald';
   text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.3);
   transition: 0.5s all;
   display: inline-block;
-  &:hover {
-    color: #fff;
-  }
+  color: #ffffffcc;
 
-  &:after {
-    content: ' ';
-    display: block;
-    width: 0;
-    transition: all 0.3s ease-out;
-    border-bottom: 2px solid #eeeeee55;
-  }
-  &:hover:after {
-    width: 100%;
+  &:hover {
+    color: #99dfff;
   }
 `;
 

@@ -9,7 +9,6 @@ const Layout: React.FC<PropsWithChildren<{}>> = ({ children }) => {
 const Wrapper = styled.div`
   display: flex;
   flex-flow: column;
-  align-items: center;
   min-height: 100vh;
 `;
 

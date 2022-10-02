@@ -12,17 +12,15 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <PrismicProvider
       linkResolver={linkResolver}
-      internalLinkComponent={({ href, children, ...props }) => (
+      internalLinkComponent={({ href, ...props }) => (
         <Link href={href}>
-          <a {...props}>{children}</a>
+          <a {...props} />
         </Link>
       )}
     >
-      {process?.env.NODE_ENV === 'development' && (
-        <PrismicPreview repositoryName={repositoryName}>
-          <Component {...pageProps} />
-        </PrismicPreview>
-      )}
+      <PrismicPreview repositoryName={repositoryName}>
+        <Component {...pageProps} />
+      </PrismicPreview>
     </PrismicProvider>
   );
 };

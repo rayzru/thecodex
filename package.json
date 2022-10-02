@@ -5,9 +5,6 @@
     "type": "git",
     "url": "git+https://github.com/rayzru/thecodex.git"
   },
-  "engines": {
-    "node": "16.x"
-  },
   "private": true,
   "version": "1.1.0",
   "scripts": {
@@ -33,7 +30,7 @@
     "@babel/plugin-proposal-decorators": "^7.19.3",
     "@next/eslint-plugin-next": "^12.3.1",
     "@prismicio/types": "^0.2.3",
-    "@types/node": "^18.7.23",
+    "@types/node": "^18.8.0",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "@typescript-eslint/eslint-plugin": "^5.38.1",

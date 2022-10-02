@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { BuildQueryURLArgs, predicate } from '@prismicio/client';
 import { asText } from '@prismicio/helpers';
 import { PrismicRichText } from '@prismicio/react';
@@ -102,6 +102,7 @@ const Statement: NextPage<Props> = ({
         <meta name="twitter:description" content={asText(description) || ''} />
         <meta name="twitter:image" content={image ?? ''} />
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:card" content="summary" />
       </Head>
 
       <Header title={settings.title} />

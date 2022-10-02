@@ -7,5 +7,6 @@ export type LocaleType = Locale.RU | Locale.EN;
 
 export interface SiteSettings {
   title: string;
+  description: string;
   locale?: string;
 }

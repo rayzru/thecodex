@@ -9,13 +9,18 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:import/warnings',
     'plugin:import/errors',
     'plugin:import/typescript',
     'prettier',
     'next',
+  ],
+  plugins: [
+    '@typescript-eslint',
+    'simple-import-sort',
+    'react',
+    'react-hooks',
+    'prettier',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -25,27 +30,6 @@ module.exports = {
     ecmaVersion: 2020,
     sourceType: 'module',
   },
-  overrides: [
-    {
-      files: ['*.ts', '*.tsx'], // Your TypeScript files extension
-
-      extends: [
-        'plugin:@typescript-eslint/recommended',
-        'plugin:@typescript-eslint/recommended-requiring-type-checking',
-      ],
-
-      parserOptions: {
-        project: ['./tsconfig.json'],
-      },
-    },
-  ],
-  plugins: [
-    '@typescript-eslint',
-    'simple-import-sort',
-    'react',
-    'react-hooks',
-    'prettier',
-  ],
   settings: {
     react: {
       version: 'detect',

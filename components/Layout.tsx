@@ -1,15 +1,10 @@
 import { PropsWithChildren } from 'react';
-import styled from '@emotion/styled';
+
+import style from '../styles/layout.module.scss';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 const Layout: React.FC<PropsWithChildren<{}>> = ({ children }) => {
-  return <Wrapper>{children}</Wrapper>;
+  return <div className={style.wrapper}>{children}</div>;
 };
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-flow: column;
-  min-height: 100vh;
-`;
 
 export default Layout;

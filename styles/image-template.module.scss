@@ -1,0 +1,22 @@
+.wrapper {
+  height: 600px;
+  width: 100%;
+  padding: 2em;
+  background: linear-gradient(132deg, #8091a5, #3d4a59);
+  background-size: 2400% 2400%;
+  color: #eee;
+}
+
+.title {
+  font-size: 30px;
+  font-size: 5em;
+  font-family: 'Oswald', sans-serif;
+  text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.3);
+}
+
+.description {
+  font-size: 1em;
+  line-height: 1.4em;
+  font-family: 'Montserrat', sans-serif;
+  text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.3);
+}

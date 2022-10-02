@@ -1,12 +1,14 @@
 import { FC, PropsWithChildren } from 'react';
-import { css } from '@emotion/react';
-import styled from '@emotion/styled';
+import { clsx } from 'clsx';
 import NextLink from 'next/link';
+
+import style from '../styles/link.module.scss';
 
 interface LinkProps {
   disabled?: boolean;
   href: string;
   locale?: string;
+  className?: string;
 }
 // eslint-disable-next-line @typescript-eslint/ban-types
 const Link: FC<PropsWithChildren<LinkProps>> = ({
@@ -14,37 +16,20 @@ const Link: FC<PropsWithChildren<LinkProps>> = ({
   href,
   locale,
   disabled = false,
-
+  className = '',
   ...rest
 }) => {
   return disabled ? (
-    <StyledDisabledLink {...rest}>{children}</StyledDisabledLink>
+    <a className={clsx(className, style.disabled)} {...rest}>
+      {children}
+    </a>
   ) : (
     <NextLink href={href} passHref={true} locale={locale}>
-      <StyledLink {...rest}>{children}</StyledLink>
+      <a className={clsx(className, style.link)} {...rest}>
+        {children}
+      </a>
     </NextLink>
   );
 };
-
-const LinkCss = css`
-  text-decoration: none;
-  text-transform: uppercase;
-  color: #eeeeee55;
-  font-size: 10px;
-  transition: all 0.5s ease;
-`;
-
-const StyledLink = styled.a`
-  ${LinkCss}
-  &:hover {
-    color: #eeeeeeff;
-    text-decoration: underline;
-  }
-`;
-
-const StyledDisabledLink = styled.a`
-  ${LinkCss}
-  color: #eeeeee33;
-`;
 
 export default Link;

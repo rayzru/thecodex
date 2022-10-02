@@ -1,0 +1,27 @@
+.wrapper {
+  margin-top: auto;
+  margin-bottom: 1em;
+}
+
+.text {
+  text-transform: uppercase;
+  color: #eeeeee55;
+}
+
+.link {
+  font-size: 10px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #eeeeee55;
+  &:hover {
+    color: #eeeeeeff;
+    text-decoration: underline;
+  }
+}
+
+.credentials {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 36px;
+  margin: 36px 0 20px;
+}

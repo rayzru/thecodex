@@ -1,0 +1,12 @@
+.logo {
+  margin: 52px 0 44px;
+  text-transform: uppercase;
+  font-family: 'Oswald', sans-serif;
+  font-size: 20px;
+  white-space: nowrap;
+  color: #eeeeee50;
+  transition: color 0.2s ease;
+  &:hover {
+    text-decoration: none;
+  }
+}

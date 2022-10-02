@@ -1,0 +1,32 @@
+@mixin text {
+  text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.3);
+  color: #fff;
+}
+
+@mixin text-title {
+  @include text();
+  font-family: 'Oswald';
+}
+
+@mixin text-regular {
+  @include text();
+  font-size: 1em;
+  line-height: 1.4em;
+  font-family: 'Montserrat', sans-serif;
+
+  @media only screen and (min-width: 768px) {
+    font-size: 1.5em;
+  }
+
+  @media only screen and (max-width: 767px) {
+    font-size: 1em;
+  }
+
+  @media only screen and (max-width: 767px) and (orientation: portrait) {
+    font-size: 1em;
+  }
+
+  a {
+    color: #def;
+  }
+}

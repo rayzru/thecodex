@@ -1,5 +1,4 @@
 import * as React from 'react';
-import styled from '@emotion/styled';
 import { asText } from '@prismicio/helpers';
 import { FilledLinkToDocumentField, PrismicDocument } from '@prismicio/types';
 import Footer from 'components/Footer';
@@ -10,6 +9,10 @@ import { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { createClient, linkResolver } from 'prismicio';
+
+import style from '../styles/index.module.scss';
+import image from 'next/image';
+import { DEFAULT_IMAGE } from 'lib/image';
 
 interface Props {
   statements: PrismicDocument[];
@@ -22,9 +25,17 @@ const Index: NextPage<Props> = ({ statements = [], settings, locale }) => {
     <Layout>
       <Head>
         <title>{settings.title}</title>
+        <meta name="description" content={settings.description} />
+        <meta name="robots" content="index, nofollow" />
+
+        <meta property="og:title" content={settings.title} />
+        <meta property="og:url" content={'/'} />
+
+        <meta name="twitter:title" content={settings.title} />
+        <meta name="twitter:description" content={settings.description} />
       </Head>
       <Header title={settings.title} />
-      <StatementList>
+      <div className={style.list}>
         {statements.map(({ uid: routeUid, type, data: { title } }) => {
           const uid = routeUid?.toString() || '';
           const link: FilledLinkToDocumentField<string, string, never> = {
@@ -37,38 +48,17 @@ const Index: NextPage<Props> = ({ statements = [], settings, locale }) => {
           };
           return (
             <Link key={uid} href={linkResolver(link)} passHref>
-              <StatementLink>{asText(title)}</StatementLink>
+              <a className={style.link}>{asText(title)}</a>
             </Link>
           );
         })}
-      </StatementList>
+      </div>
       <Footer />
     </Layout>
   );
 };
 
 export default Index;
-
-const StatementList = styled.div`
-  display: flex;
-  flex-flow: column;
-`;
-
-const StatementLink = styled.a`
-  text-decoration: none;
-  line-height: 2em;
-  font-size: 1.5em;
-  font-weight: 400;
-  font-family: 'Oswald';
-  text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.3);
-  transition: 0.5s all;
-  display: inline-block;
-  color: #ffffffcc;
-
-  &:hover {
-    color: #99dfff;
-  }
-`;
 
 export const getStaticProps: GetStaticProps = async ({
   locale,
@@ -79,7 +69,8 @@ export const getStaticProps: GetStaticProps = async ({
 
   const settingsData = await client.getSingle('settings', opts);
   const settings: SiteSettings = {
-    title: asText(settingsData.data.title) || 'The Codex',
+    title: asText(settingsData.data.title) ?? 'The Codex',
+    description: asText(settingsData.data.description) ?? '',
     locale,
   };
   const statements = await client.getAllByType('statement', { lang: locale });

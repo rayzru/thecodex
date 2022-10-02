@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import * as React from 'react';
-import styled from '@emotion/styled';
 import { BuildQueryURLArgs, predicate } from '@prismicio/client';
 import { asText } from '@prismicio/helpers';
 import { PrismicRichText } from '@prismicio/react';
@@ -11,12 +10,14 @@ import Header from 'components/Header';
 import Heading from 'components/Heading';
 import Layout from 'components/Layout';
 import Link from 'components/Link';
+import { DEFAULT_IMAGE, getImage } from 'lib/image';
 import { SiteSettings } from 'lib/settings';
 import { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { createClient, languages, linkResolver } from 'prismicio';
 
+import style from '../styles/page.module.scss';
 interface Props {
   statement: PrismicDocument;
   settings: SiteSettings;
@@ -30,9 +31,36 @@ const Statement: NextPage<Props> = ({
   nextLink,
   prevLink,
 }) => {
-  const title = asText(statement?.data?.title);
   const router = useRouter();
   const [queued, setQueued] = React.useState(false);
+  const [image, setImage] = React.useState<string | null>(
+    DEFAULT_IMAGE as string
+  );
+  const ref = React.useRef<HTMLElement>(null);
+
+  const title = asText(statement?.data?.title) ?? '';
+  const pageTitle = `
+    ${title} 
+    ${String.fromCharCode(9734)} 
+    ${settings.title}
+  `;
+
+  const description = statement?.data?.description ?? '';
+  const url = router.query?.slug?.toString() || '/';
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+
+  React.useEffect(() => {
+    if (ref && ref.current) {
+      const getImageData = async () => {
+        const clone = (ref.current as HTMLElement).cloneNode(true);
+        getImage({ title, settings, description }, clone as HTMLElement).then(
+          (dataImage) => setImage(dataImage)
+        );
+      };
+      getImageData();
+    }
+  }, [ref, router]);
 
   React.useEffect(() => {
     function onKeyDown(e: KeyboardEventInit) {
@@ -60,102 +88,65 @@ const Statement: NextPage<Props> = ({
   return (
     <Layout>
       <Head>
-        <title>
-          {title} {String.fromCharCode(9734)} {settings.title}
-        </title>
+        <title>{pageTitle}</title>
+
+        <meta name="description" content={asText(description) || ''} />
+        <meta name="robots" content="index, nofollow" />
+
+        <meta property="og:title" content={title} />
+        <meta property="og:url" content={url} />
+        <meta property="og:image" content={image ?? ''} />
+
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={asText(description) || ''} />
+        <meta name="twitter:image" content={image ?? ''} />
+        <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
       <Header title={settings.title} />
 
-      <PageWrapper>
-        <StyledHeading headingLevel="h1">{title}</StyledHeading>
-        <Description>
-          <PrismicRichText field={statement?.data?.description} />
-        </Description>
-      </PageWrapper>
+      <main className={style.page} ref={ref}>
+        <article className={style.description}>
+          <Heading headingLevel="h1" className={style.title}>
+            {title}
+          </Heading>
+          <PrismicRichText field={description} />
+        </article>
+      </main>
       <Footer>
-        <NavigationRow>
-          {statement.alternate_languages &&
-            statement.alternate_languages.map((l) => (
-              <Link key={l.uid} href={linkResolver(l)} locale={l.lang}>
-                {l.lang === 'en-us' ? languages['en-us'] : languages['ru']}
-              </Link>
-            ))}
-        </NavigationRow>
-        <NavigationRow>
-          <BigLink href={prevLink} disabled={prevLink === '/'}>
+        {statement.alternate_languages &&
+          statement.alternate_languages.length > 0 && (
+            <nav className={style.nav_row}>
+              {statement.alternate_languages.map((l) => (
+                <Link key={l.uid} href={linkResolver(l)} locale={l.lang}>
+                  {l.lang === 'en-us' ? languages['en-us'] : languages['ru']}
+                </Link>
+              ))}
+            </nav>
+          )}
+        <nav className={style.nav_row}>
+          <Link
+            className={style.arrow_link}
+            href={prevLink}
+            disabled={prevLink === '/'}
+          >
             {String.fromCharCode(8592)}
-          </BigLink>
+          </Link>
 
-          <BigLink href={nextLink} disabled={nextLink === '/'}>
+          <Link
+            className={style.arrow_link}
+            href={nextLink}
+            disabled={nextLink === '/'}
+          >
             {String.fromCharCode(8594)}
-          </BigLink>
-        </NavigationRow>
+          </Link>
+        </nav>
       </Footer>
     </Layout>
   );
 };
 
 export default Statement;
-
-const NavigationRow = styled.nav`
-  display: flex;
-  flex-flow: row nowrap;
-  column-gap: 36px;
-  margin: 4em 0;
-  color: eeeeee33;
-`;
-
-const BigLink = styled(Link)`
-  font-size: 30px !important;
-  font-weight: 200;
-  font-family: Arial, sans-serif;
-  &:hover {
-    text-decoration: none;
-  }
-`;
-
-const PageWrapper = styled.main`
-  display: flex;
-  flex-flow: column;
-`;
-
-const StyledHeading = styled(Heading)`
-  font-size: 5em;
-  font-weight: 600;
-  color: #eee;
-  font-family: 'Oswald';
-  text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.3);
-
-  @media only screen and (max-width: 767px) {
-    font-size: 4em;
-  }
-`;
-
-export const Description = styled.article`
-  margin-top: 3em;
-  font-size: 1em;
-  line-height: 1.4em;
-  color: #eee;
-  font-family: 'Montserrat', sans-serif;
-  text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.3);
-
-  a {
-    color: #def;
-  }
-
-  @media only screen and (min-width: 768px) {
-    font-size: 1.5em;
-  }
-
-  @media only screen and (max-width: 767px) {
-    font-size: 1em;
-  }
-
-  @media only screen and (max-width: 767px) and (orientation: portrait) {
-    font-size: 1em;
-  }
-`;
 
 export const getStaticProps: GetStaticProps = async ({
   params,
@@ -199,6 +190,7 @@ export const getStaticProps: GetStaticProps = async ({
     prevStatement = (await client.get(prevOpts))?.results?.[0];
     // eslint-disable-next-line no-empty
   } catch (err) {}
+
   return {
     props: {
       statement,

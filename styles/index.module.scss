@@ -1,0 +1,21 @@
+@import '../styles/base.scss';
+
+.list {
+  display: flex;
+  flex-flow: column;
+}
+
+.link {
+  @include text-title();
+  text-decoration: none;
+  line-height: 2em;
+  font-size: 1.5em;
+
+  transition: 0.5s all;
+  display: inline-block;
+  color: #ffffffcc;
+
+  &:hover {
+    color: #99dfff;
+  }
+}

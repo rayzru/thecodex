@@ -1,0 +1,38 @@
+@import '../styles/base.scss';
+
+.page {
+  display: flex;
+  flex-flow: column;
+  flex-grow: 1;
+}
+
+.nav_row {
+  display: flex;
+  flex-flow: row nowrap;
+  column-gap: 36px;
+  margin: 4em 0;
+  color: eeeeee33;
+}
+
+.arrow_link {
+  font-size: 30px !important;
+  font-weight: 200;
+  font-family: Arial, sans-serif;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.title {
+  @include text-title();
+  font-size: 3em;
+  line-height: 1em;
+
+  @media only screen and (max-width: 767px) {
+    font-size: 4em;
+  }
+}
+
+.description {
+  @include text-regular();
+}

@@ -1,11 +1,7 @@
-import ImageTemplate, { ImageTemplateProps } from 'components/ImageTemplate';
+import { ImageTemplateProps } from 'components/ImageTemplate';
 import { getFontEmbedCSS, toPng } from 'html-to-image';
-import { css2style } from './styles';
-import { renderToStaticMarkup, renderToString } from 'react-dom/server';
-import { createElement } from 'react';
 
-export const DEFAULT_IMAGE =
-  'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
+import { css2style } from './styles';
 
 export const downloadImage = (dataUrl: string, imageName = 'download') => {
   const link = document.createElement('a');
@@ -18,7 +14,7 @@ export const downloadImage = (dataUrl: string, imageName = 'download') => {
 
 export const getImage = async (
   { settings }: ImageTemplateProps,
-  element: HTMLElement | null
+  element: HTMLElement
 ) => {
   if (element === null) {
     return null;
@@ -49,11 +45,6 @@ export const getImage = async (
     fontFamily: 'Montserrat',
     padding: '30px',
     borderRadius: '30px 50px 30px 0',
-  };
-
-  const articleStyles: React.CSSProperties = {
-    justifyContent: 'center',
-    height: '',
   };
 
   const h1Styles: React.CSSProperties = {

@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import * as React from 'react';
 import { BuildQueryURLArgs, predicate } from '@prismicio/client';
 import { asText } from '@prismicio/helpers';
@@ -10,7 +8,7 @@ import Header from 'components/Header';
 import Heading from 'components/Heading';
 import Layout from 'components/Layout';
 import Link from 'components/Link';
-import { DEFAULT_IMAGE, getImage } from 'lib/image';
+import { getImage } from 'lib/image';
 import { SiteSettings } from 'lib/settings';
 import { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
@@ -33,9 +31,7 @@ const Statement: NextPage<Props> = ({
 }) => {
   const router = useRouter();
   const [queued, setQueued] = React.useState(false);
-  const [image, setImage] = React.useState<string | null>(
-    DEFAULT_IMAGE as string
-  );
+  const [image, setImage] = React.useState<string>('');
   const ref = React.useRef<HTMLElement>(null);
 
   const title = asText(statement?.data?.title) ?? '';
@@ -45,19 +41,24 @@ const Statement: NextPage<Props> = ({
     ${settings.title}
   `;
 
-  const description = statement?.data?.description ?? '';
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const description = statement?.data?.description;
   const url = router.query?.slug?.toString() || '/';
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-
   React.useEffect(() => {
-    if (ref && ref.current) {
-      const getImageData = async () => {
-        const clone = (ref.current as HTMLElement).cloneNode(true);
-        getImage({ title, settings, description }, clone as HTMLElement).then(
-          (dataImage) => setImage(dataImage)
-        );
+    if (ref && ref.current && ref.current !== null) {
+      const getImageData = () => {
+        const clone = ref.current?.cloneNode(true);
+        if (clone) {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+          getImage(
+            { title, settings, description: asText(description) },
+            clone as HTMLElement
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+          ).then((dataImage) => setImage(dataImage ?? ''));
+        }
       };
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       getImageData();
     }
   }, [ref, router]);
@@ -114,16 +115,15 @@ const Statement: NextPage<Props> = ({
         </article>
       </main>
       <Footer>
-        {statement.alternate_languages &&
-          statement.alternate_languages.length > 0 && (
-            <nav className={style.nav_row}>
-              {statement.alternate_languages.map((l) => (
-                <Link key={l.uid} href={linkResolver(l)} locale={l.lang}>
-                  {l.lang === 'en-us' ? languages['en-us'] : languages['ru']}
-                </Link>
-              ))}
-            </nav>
-          )}
+        {statement?.alternate_languages?.length > 0 && (
+          <nav className={style.nav_row}>
+            {statement.alternate_languages.map((l) => (
+              <Link key={l.uid} href={linkResolver(l)} locale={l.lang}>
+                {l.lang === 'en-us' ? languages['en-us'] : languages['ru']}
+              </Link>
+            ))}
+          </nav>
+        )}
         <nav className={style.nav_row}>
           <Link
             className={style.arrow_link}
@@ -160,6 +160,7 @@ export const getStaticProps: GetStaticProps = async ({
   const settingsData = await client.getSingle('settings', opts);
   const settings: SiteSettings = {
     title: asText(settingsData.data.title) || 'The Codex',
+    description: asText(settingsData.data.description) || '',
     locale,
   };
   const statement = await client.getByUID('statement', uid, opts);

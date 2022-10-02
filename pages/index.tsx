@@ -11,8 +11,6 @@ import Link from 'next/link';
 import { createClient, linkResolver } from 'prismicio';
 
 import style from '../styles/index.module.scss';
-import image from 'next/image';
-import { DEFAULT_IMAGE } from 'lib/image';
 
 interface Props {
   statements: PrismicDocument[];

@@ -8,7 +8,8 @@ module.exports = {
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
-    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:import/warnings',
     'plugin:import/errors',
     'plugin:import/typescript',
@@ -24,11 +25,10 @@ module.exports = {
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
+    project: `./tsconfig.json`,
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: 2020,
-    sourceType: 'module',
   },
   settings: {
     react: {
@@ -90,6 +90,6 @@ module.exports = {
     'import/no-duplicates': 'error',
     'no-duplicate-imports': 'error',
     'no-dupe-class-members': 'error',
-    'prettier/prettier': ['error', { singleQuote: true, parser: 'flow' }],
+    'prettier/prettier': ['error', { singleQuote: true, parser: 'typescript' }],
   },
 };

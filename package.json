@@ -6,7 +6,7 @@
     "url": "git+https://github.com/rayzru/thecodex.git"
   },
   "engines": {
-    "node": ">16"
+    "node": "16.x"
   },
   "private": true,
   "version": "1.1.0",

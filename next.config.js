@@ -1,5 +1,4 @@
 const path = require('path');
-
 module.exports = {
   i18n: {
     locales: ['en-us', 'ru'],
@@ -7,7 +6,10 @@ module.exports = {
     localeDetection: true,
   },
   // trailingSlash: true,
-  webpack: (config) => {
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback.fs = false;
+    }
     config.module.rules.push({
       test: /\.svg$/,
       use: [

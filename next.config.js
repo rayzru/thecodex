@@ -1,9 +1,9 @@
 const path = require('path');
 module.exports = {
   i18n: {
-    locales: ['en-us', 'ru'],
-    defaultLocale: 'ru',
-    localeDetection: true,
+    locales: ['default', 'ru', 'en-us'],
+    defaultLocale: 'default',
+    localeDetection: false,
   },
   // trailingSlash: true,
   webpack: (config, { isServer }) => {

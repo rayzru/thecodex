@@ -2,17 +2,18 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const PUBLIC_FILE = /\.(.*)$/;
 
-export function middleware(request: NextRequest) {
-  const shouldHandleLocale =
-    !PUBLIC_FILE.test(request.nextUrl.pathname) &&
-    !request.nextUrl.pathname.includes('/api/') &&
-    request.nextUrl.locale === 'default';
-
-  if (shouldHandleLocale) {
-    const url = request.nextUrl.clone();
-    url.pathname = `/ru${request.nextUrl.pathname}`;
-    return NextResponse.redirect(url);
+export async function middleware(req: NextRequest) {
+  if (
+    req.nextUrl.pathname.startsWith('/_next') ||
+    req.nextUrl.pathname.includes('/api/') ||
+    PUBLIC_FILE.test(req.nextUrl.pathname)
+  ) {
+    return;
   }
 
-  return undefined;
+  if (req.nextUrl.locale === 'default') {
+    return NextResponse.redirect(
+      new URL(`/ru${req.nextUrl.pathname}`, req.url)
+    );
+  }
 }

@@ -1,8 +1,8 @@
 const path = require('path');
 module.exports = {
   i18n: {
-    locales: ['default', 'ru', 'en-us'],
-    defaultLocale: 'default',
+    locales: ['ru', 'en-us'],
+    defaultLocale: 'ru',
     localeDetection: false,
   },
   // trailingSlash: true,

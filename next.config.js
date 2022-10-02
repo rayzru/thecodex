@@ -18,9 +18,7 @@ module.exports = {
     });
     return config;
   },
-  sassOptions: {
-    includePaths: [path.join(__dirname, 'styles')],
-  },
   poweredByHeader: false,
-  productionBrowserSourceMaps: false,
+  productionBrowserSourceMaps: true,
+  swcMinify: true,
 };

@@ -23,8 +23,7 @@ interface Props {
 const Index: NextPage<Props> = ({ statements = [], settings, locale }) => {
   const { asPath } = useRouter();
   const URL = `${getDomain()}${asPath}`;
-  const queryString = new URLSearchParams({ lang: locale }).toString();
-  const socialUrl = `${getDomain()}/api/social?${queryString}`;
+  const socialUrl = `${getDomain()}/api/social/${locale}}/-`;
 
   return (
     <Layout>

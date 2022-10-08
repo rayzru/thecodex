@@ -39,8 +39,7 @@ const Statement: NextPage<Props> = ({
 
   const { asPath } = useRouter();
   const URL = `${getDomain()}${asPath}`;
-  const queryString = new URLSearchParams({ id: uid, lang }).toString();
-  const socialUrl = `${getDomain()}/api/social?${queryString}`;
+  const socialUrl = `${getDomain()}/api/social/${lang}/${uid}`;
 
   useEffect(() => {
     function onKeyDown(e: KeyboardEventInit) {

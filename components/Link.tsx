@@ -1,5 +1,4 @@
 import { FC, PropsWithChildren } from 'react';
-import { clsx } from 'clsx';
 import NextLink from 'next/link';
 
 import style from '../styles/link.module.scss';
@@ -20,12 +19,12 @@ const Link: FC<PropsWithChildren<LinkProps>> = ({
   ...rest
 }) => {
   return disabled ? (
-    <a className={clsx(className, style.disabled)} {...rest}>
+    <a className={`${className ? className : ''} ${style.disabled}`} {...rest}>
       {children}
     </a>
   ) : (
     <NextLink href={href} passHref={true} locale={locale}>
-      <a className={clsx(className, style.link)} {...rest}>
+      <a className={`${className ? className : ''} ${style.link}`} {...rest}>
         {children}
       </a>
     </NextLink>

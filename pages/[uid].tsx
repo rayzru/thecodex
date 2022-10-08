@@ -2,21 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { BuildQueryURLArgs, predicate } from '@prismicio/client';
 import { asText } from '@prismicio/helpers';
 import { PrismicRichText } from '@prismicio/react';
-import { PrismicDocument } from '@prismicio/types';
 import Footer from 'components/Footer';
 import Header from 'components/Header';
 import Heading from 'components/Heading';
 import Layout from 'components/Layout';
 import Link from 'components/Link';
-import { SiteSettings } from 'lib/settings';
+import SEO from 'components/seo';
+import { getDomain, SiteSettings } from 'lib/settings';
+import { cleanString } from 'lib/strings';
+import { Statement } from 'lib/types';
 import { GetStaticProps, NextPage } from 'next';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
+import router, { useRouter } from 'next/router';
 import { createClient, languages, linkResolver } from 'prismicio';
 
 import style from '../styles/page.module.scss';
 interface Props {
-  statement: PrismicDocument;
+  statement: Statement;
   settings: SiteSettings;
   nextLink: string;
   prevLink: string;
@@ -28,24 +29,18 @@ const Statement: NextPage<Props> = ({
   nextLink,
   prevLink,
 }) => {
-  const router = useRouter();
   const [queued, setQueued] = useState(false);
+  const { uid, lang = 'ru', data } = statement;
 
-  const title = asText(statement?.data?.title);
-  const description = asText(statement?.data?.description);
-  const name = settings.title;
-  const pageTitle = `${title} ${String.fromCharCode(9734)} ${name}`;
+  const title = asText(data?.title);
+  const descr = data?.excerpt
+    ? data?.excerpt
+    : asText(data?.description)?.split('. ', 1)[0];
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const url = router.query?.slug?.toString() || '/';
-
-  const socialUrl = statement.uid
-    ? '/api/social?' +
-      new URLSearchParams({
-        id: statement.uid || '',
-        lang: settings.locale || '',
-      }).toString()
-    : '';
+  const { asPath } = useRouter();
+  const URL = `${getDomain()}${asPath}`;
+  const queryString = new URLSearchParams({ id: uid, lang }).toString();
+  const socialUrl = `${URL}/api/social?${queryString}`;
 
   useEffect(() => {
     function onKeyDown(e: KeyboardEventInit) {
@@ -72,22 +67,13 @@ const Statement: NextPage<Props> = ({
 
   return (
     <Layout>
-      <Head>
-        <title>{pageTitle}</title>
-
-        <meta name="description" content={description ?? ''} />
-        <meta name="robots" content="index, nofollow" />
-
-        <meta property="og:title" content={title ?? ''} />
-        <meta property="og:url" content={url} />
-        <meta property="og:image" content={socialUrl} />
-
-        <meta name="twitter:title" content={title ?? ''} />
-        <meta name="twitter:description" content={description ?? ''} />
-        <meta name="twitter:image" content={socialUrl} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:card" content="summary" />
-      </Head>
+      <SEO
+        title={cleanString(title)}
+        description={cleanString(descr)}
+        url={URL}
+        imageUrl={socialUrl}
+        siteName={settings.title}
+      />
 
       <Header title={settings.title} showLocales />
 

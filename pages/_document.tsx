@@ -6,7 +6,14 @@ export default class MyDocument extends Document {
     return (
       <Html prefix="og: http://ogp.me/ns#">
         <Head>
-          <meta name="theme-color" content="#8091a5" />
+          <meta name="robots" content="all" />
+          <meta name="color-scheme" content="light dark" />
+          <meta name="theme-color" content="black" />
+          <link rel="manifest" href="/manifest.json" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+          />
           <link rel="icon" href="/favicon.svg" />
         </Head>
         <body>

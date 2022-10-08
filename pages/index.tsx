@@ -5,10 +5,11 @@ import Footer from 'components/Footer';
 import Header from 'components/Header';
 import Layout from 'components/Layout';
 import Link from 'components/Link';
-import { SiteSettings } from 'lib/settings';
+import SEO from 'components/seo';
+import { getDomain, SiteSettings } from 'lib/settings';
 import { GetStaticProps, NextPage } from 'next';
-import Head from 'next/head';
 import NextLink from 'next/link';
+import { useRouter } from 'next/router';
 import { createClient, languages, linkResolver } from 'prismicio';
 
 import style from '../styles/index.module.scss';
@@ -20,19 +21,21 @@ interface Props {
 }
 
 const Index: NextPage<Props> = ({ statements = [], settings, locale }) => {
+  const { asPath } = useRouter();
+  const URL = `${getDomain()}${asPath}`;
+  const queryString = new URLSearchParams({ lang: locale }).toString();
+  const socialUrl = `${URL}/api/social?${queryString}`;
+
   return (
     <Layout>
-      <Head>
-        <title>{settings.title}</title>
-        <meta name="description" content={settings.description} />
-        <meta name="robots" content="index, nofollow" />
+      <SEO
+        title={settings.title}
+        description={''}
+        url={URL}
+        imageUrl={socialUrl}
+        siteName={settings.title}
+      />
 
-        <meta property="og:title" content={settings.title} />
-        <meta property="og:url" content={'/'} />
-
-        <meta name="twitter:title" content={settings.title} />
-        <meta name="twitter:description" content={settings.description} />
-      </Head>
       <Header title={settings.title}>
         <nav className={style.locales}>
           {Object.entries(languages)
@@ -46,8 +49,11 @@ const Index: NextPage<Props> = ({ statements = [], settings, locale }) => {
       </Header>
       <div className={style.list}>
         {statements.map(
-          ({ uid: routeUid, type, data: { title, description } }) => {
+          ({ uid: routeUid, type, data: { title, excerpt, description } }) => {
             const uid = routeUid?.toString() || '';
+            const descr = excerpt
+              ? excerpt
+              : asText(description)?.split('. ', 1)[0];
             const link: FilledLinkToDocumentField<string, string, never> = {
               uid,
               type,
@@ -61,7 +67,7 @@ const Index: NextPage<Props> = ({ statements = [], settings, locale }) => {
                 <a className={style.card}>
                   <h2 className={style.title}>{asText(title)}</h2>
                   <div className={style.description}>
-                    <p>{asText(description)}</p>
+                    <p>{descr}</p>
                   </div>
                 </a>
               </NextLink>

@@ -1,0 +1,9 @@
+{
+  "name": "The Codex",
+  "short_name": "thecodex",
+  "theme_color": "#e7c416",
+  "background_color": "#000000",
+  "display": "browser",
+  "scope": "/",
+  "start_url": "/"
+}

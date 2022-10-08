@@ -23,22 +23,26 @@ const style = `
       font-style: normal;
   }
 
+  html {
+    font-size: ${Math.round((ogImageConfig.width || 600) / 40)}px;
+  }
+
   body {
-    font-size: 15px;
+    font-size: 1em;
     font-family: Montserat, 'Open Sans', Helvetica, Arial;
     display: flex;
     flex-direction: column;
     min-height: 100%;
     margin: 0;
     color: white;
-    row-gap: 20px;
+    row-gap: 1em;
   }
 
   h1 {
     font-family: Oswald, Arial, sans-serif;
-    font-size: 60px;
+    font-size: 4em;
     margin: 0;
-    line-height: 1.1em;
+    line-height: 1.1;
   }
 
   p {
@@ -58,7 +62,7 @@ const style = `
     display: flex;
     flex-direction: column;
     flex: 1;
-    row-gap: 30px;
+    row-gap: 1.5em;
     justify-content: center;
   }
 
@@ -70,15 +74,15 @@ const style = `
     color: #e7c416;
     text-transform: uppercase;
     display: flex;
-    margin-bottom: 30px;
-    font-size: 12px;
+    margin-bottom: 1.5em;
+    font-size: .8em;
   }
 
   .link {
     opacity: 0.5;
     text-decoration: underline;
-    font-size: 10px;
-    margin-top: 4px;
+    font-size: 0.6em;
+    margin-top: 0.1em;
   }
 
   .logo {
@@ -86,14 +90,14 @@ const style = `
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 45px;
-    height: 45px;
+    width: 2em;
+    height: 2em;
     border-radius: 50%;
-    border: 2px solid #e7c416;
+    border: 0.3em solid #e7c416;
   }
 
   .logo svg {
-    height: 20px;
+    height: 1.5em;
     width: auto;
     fill: #ffffff;
     color: #fff;
@@ -107,8 +111,8 @@ const style = `
   }
 
   .logo:after {
-    width: 4px;
-    height: 4px;
+    width: 0.3em;
+    height: 0.3em;
     content: '';
     border-radius: 50%;
     background-color: #e7c416;

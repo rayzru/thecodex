@@ -26,10 +26,16 @@ export type OGOptions = Omit<
 export const ogImageConfig: OGOptions = {
   // type: 'jpeg',
   // quality: 80,
-  width: 600,
-  height: 315,
+  type: 'png',
+  width: 600 * 2,
+  height: 315 * 2,
   cacheControl: 'public, max-age=604800, immutable',
   dev: {
     inspectHtml: false,
   },
 };
+
+export const getDomain = () =>
+  typeof window !== 'undefined' && window.location.origin
+    ? window.location.origin
+    : '';

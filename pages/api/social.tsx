@@ -131,6 +131,7 @@ export default withOGImage<'query', keyof typeof Params>({
   width: 600,
   height: 430,
   cacheControl: 'public, max-age=604800, immutable',
+
   dev: {
     inspectHtml: false,
   },

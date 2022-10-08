@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BuildQueryURLArgs, predicate } from '@prismicio/client';
 import { asText } from '@prismicio/helpers';
 import { PrismicRichText } from '@prismicio/react';
@@ -9,7 +9,6 @@ import Heading from 'components/Heading';
 import Layout from 'components/Layout';
 import Link from 'components/Link';
 import { SiteSettings } from 'lib/settings';
-import { b64encode } from 'lib/strings';
 import { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -30,7 +29,7 @@ const Statement: NextPage<Props> = ({
   prevLink,
 }) => {
   const router = useRouter();
-  const [queued, setQueued] = React.useState(false);
+  const [queued, setQueued] = useState(false);
 
   const title = asText(statement?.data?.title);
   const description = asText(statement?.data?.description);
@@ -48,7 +47,7 @@ const Statement: NextPage<Props> = ({
       }).toString()
     : '';
 
-  React.useEffect(() => {
+  useEffect(() => {
     function onKeyDown(e: KeyboardEventInit) {
       if (queued) {
         return;

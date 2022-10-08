@@ -1,8 +1,8 @@
-import { useState } from 'react';
+/* eslint-disable @next/next/no-head-element */
 import { asText } from '@prismicio/helpers';
 import { PrismicRichText } from '@prismicio/react';
 import { Montserat, Oswald } from 'lib/fonts';
-import { defaultLocales, Locales } from 'lib/strings';
+import { Locales } from 'lib/strings';
 import { withOGImage } from 'next-api-og-image';
 import { createClient } from 'prismicio';
 

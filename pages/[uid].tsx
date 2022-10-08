@@ -8,8 +8,8 @@ import Header from 'components/Header';
 import Heading from 'components/Heading';
 import Layout from 'components/Layout';
 import Link from 'components/Link';
-import { getImage } from 'lib/image';
 import { SiteSettings } from 'lib/settings';
+import { b64encode } from 'lib/strings';
 import { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -31,37 +31,22 @@ const Statement: NextPage<Props> = ({
 }) => {
   const router = useRouter();
   const [queued, setQueued] = React.useState(false);
-  const [image, setImage] = React.useState<string>('');
-  const ref = React.useRef<HTMLElement>(null);
 
-  const title = asText(statement?.data?.title) ?? '';
-  const pageTitle = `
-    ${title} 
-    ${String.fromCharCode(9734)} 
-    ${settings.title}
-  `;
+  const title = asText(statement?.data?.title);
+  const description = asText(statement?.data?.description);
+  const name = settings.title;
+  const pageTitle = `${title} ${String.fromCharCode(9734)} ${name}`;
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const description = statement?.data?.description;
   const url = router.query?.slug?.toString() || '/';
 
-  React.useEffect(() => {
-    if (ref && ref.current && ref.current !== null) {
-      const getImageData = () => {
-        const clone = ref.current?.cloneNode(true);
-        if (clone) {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-          getImage(
-            { title, settings, description: asText(description) },
-            clone as HTMLElement
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-          ).then((dataImage) => setImage(dataImage ?? ''));
-        }
-      };
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      getImageData();
-    }
-  }, [ref, router]);
+  const socialUrl = statement.uid
+    ? '/api/social?' +
+      new URLSearchParams({
+        id: statement.uid || '',
+        lang: settings.locale || '',
+      }).toString()
+    : '';
 
   React.useEffect(() => {
     function onKeyDown(e: KeyboardEventInit) {
@@ -91,28 +76,28 @@ const Statement: NextPage<Props> = ({
       <Head>
         <title>{pageTitle}</title>
 
-        <meta name="description" content={asText(description) || ''} />
+        <meta name="description" content={description ?? ''} />
         <meta name="robots" content="index, nofollow" />
 
-        <meta property="og:title" content={title} />
+        <meta property="og:title" content={title ?? ''} />
         <meta property="og:url" content={url} />
-        <meta property="og:image" content={image ?? ''} />
+        <meta property="og:image" content={socialUrl} />
 
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={asText(description) || ''} />
-        <meta name="twitter:image" content={image ?? ''} />
+        <meta name="twitter:title" content={title ?? ''} />
+        <meta name="twitter:description" content={description ?? ''} />
+        <meta name="twitter:image" content={socialUrl} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:card" content="summary" />
       </Head>
 
-      <Header title={settings.title} />
+      <Header title={settings.title} showLocales />
 
-      <main className={style.page} ref={ref}>
+      <main className={style.page}>
         <article className={style.description}>
           <Heading headingLevel="h1" className={style.title}>
             {title}
           </Heading>
-          <PrismicRichText field={description} />
+          <PrismicRichText field={statement?.data?.description} />
         </article>
       </main>
       <Footer>

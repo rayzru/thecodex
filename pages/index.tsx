@@ -4,11 +4,12 @@ import { FilledLinkToDocumentField, PrismicDocument } from '@prismicio/types';
 import Footer from 'components/Footer';
 import Header from 'components/Header';
 import Layout from 'components/Layout';
+import Link from 'components/Link';
 import { SiteSettings } from 'lib/settings';
 import { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
-import Link from 'next/link';
-import { createClient, linkResolver } from 'prismicio';
+import NextLink from 'next/link';
+import { createClient, languages, linkResolver } from 'prismicio';
 
 import style from '../styles/index.module.scss';
 
@@ -32,24 +33,41 @@ const Index: NextPage<Props> = ({ statements = [], settings, locale }) => {
         <meta name="twitter:title" content={settings.title} />
         <meta name="twitter:description" content={settings.description} />
       </Head>
-      <Header title={settings.title} />
+      <Header title={settings.title}>
+        <nav className={style.locales}>
+          {Object.entries(languages)
+            .filter(([l]) => locale !== l)
+            .map(([l, v]) => (
+              <Link key={l} href="/" locale={l} className={style.locale}>
+                {v}
+              </Link>
+            ))}
+        </nav>
+      </Header>
       <div className={style.list}>
-        {statements.map(({ uid: routeUid, type, data: { title } }) => {
-          const uid = routeUid?.toString() || '';
-          const link: FilledLinkToDocumentField<string, string, never> = {
-            uid,
-            type,
-            link_type: 'Document',
-            id: uid,
-            tags: [],
-            lang: locale,
-          };
-          return (
-            <Link key={uid} href={linkResolver(link)} passHref>
-              <a className={style.link}>{asText(title)}</a>
-            </Link>
-          );
-        })}
+        {statements.map(
+          ({ uid: routeUid, type, data: { title, description } }) => {
+            const uid = routeUid?.toString() || '';
+            const link: FilledLinkToDocumentField<string, string, never> = {
+              uid,
+              type,
+              link_type: 'Document',
+              id: uid,
+              tags: [],
+              lang: locale,
+            };
+            return (
+              <NextLink key={uid} href={linkResolver(link)} passHref>
+                <a className={style.card}>
+                  <h2 className={style.title}>{asText(title)}</h2>
+                  <div className={style.description}>
+                    <p>{asText(description)}</p>
+                  </div>
+                </a>
+              </NextLink>
+            );
+          }
+        )}
       </div>
       <Footer />
     </Layout>

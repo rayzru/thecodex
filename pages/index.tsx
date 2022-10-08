@@ -30,11 +30,22 @@ const Index: NextPage<Props> = ({ statements = [], settings, locale }) => {
     <Layout>
       <SEO
         title={settings.title}
-        description={''}
         url={URL}
         imageUrl={socialUrl}
         siteName={settings.title}
-      />
+        locale={locale}
+      >
+        {Object.entries(languages)
+          .filter(([l]) => locale !== l)
+          .map(([l]) => (
+            <link
+              key={l}
+              rel="alternate"
+              hrefLang={l}
+              href={`${getDomain()}/${l}`}
+            />
+          ))}
+      </SEO>
 
       <Header title={settings.title}>
         <nav className={style.locales}>

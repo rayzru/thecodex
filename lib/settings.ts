@@ -24,11 +24,11 @@ export type OGOptions = Omit<
 >;
 
 export const ogImageConfig: OGOptions = {
-  // type: 'jpeg',
-  // quality: 80,
-  type: 'png',
-  width: 600 * 2,
-  height: 315 * 2,
+  // type: 'png',
+  type: 'jpeg',
+  quality: 80,
+  width: 1200,
+  height: 630,
   cacheControl: 'public, max-age=604800, immutable',
   dev: {
     inspectHtml: false,

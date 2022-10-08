@@ -73,7 +73,20 @@ const Statement: NextPage<Props> = ({
         url={URL}
         imageUrl={socialUrl}
         siteName={settings.title}
-      />
+        locale={lang}
+        pageType="article"
+      >
+        {statement.alternate_languages
+          .filter((l) => l.lang === lang)
+          .map((l) => (
+            <link
+              key={l.lang}
+              rel="alternate"
+              hrefLang={languages[l.lang as keyof typeof languages]}
+              href={`${getDomain()}/${linkResolver(l)}`}
+            />
+          ))}
+      </SEO>
 
       <Header title={settings.title} showLocales />
 

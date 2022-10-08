@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-head-element */
 import { asText } from '@prismicio/helpers';
 import { PrismicRichText } from '@prismicio/react';
+import { PrismicDocument } from '@prismicio/types';
 import { Montserat, Oswald } from 'lib/fonts';
 import { Locales } from 'lib/strings';
 import { withOGImage } from 'next-api-og-image';
@@ -103,13 +104,17 @@ export default withOGImage<'query', keyof typeof Params>({
             <div className="wrap">
               <div className="content">
                 {!error ? (
-                  <PrismicRichText field={statement?.data?.title} />
+                  <PrismicRichText
+                    field={(statement as PrismicDocument)?.data?.title}
+                  />
                 ) : (
                   <h1>{projectName}</h1>
                 )}
 
                 {!error && (
-                  <PrismicRichText field={statement?.data?.description} />
+                  <PrismicRichText
+                    field={(statement as PrismicDocument)?.data?.description}
+                  />
                 )}
               </div>
               <footer>

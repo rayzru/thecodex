@@ -3,6 +3,7 @@ import { asText } from '@prismicio/helpers';
 import { PrismicRichText } from '@prismicio/react';
 import { PrismicDocument } from '@prismicio/types';
 import { Montserat, Oswald } from 'lib/fonts';
+import { ogImageConfig } from 'lib/settings';
 import { Locales } from 'lib/strings';
 import { withOGImage } from 'next-api-og-image';
 import { createClient } from 'prismicio';
@@ -44,7 +45,6 @@ const style = `
     line-height: 1.3em;
   }
 
-
   .wrap {
     display: flex;
     flex-direction: column;
@@ -64,12 +64,54 @@ const style = `
 
   footer {
     flex: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     color: #e7c416;
     text-transform: uppercase;
     display: flex;
-    justify-content: space-between;
     margin-bottom: 30px;
-    font-size: 13px;
+    font-size: 12px;
+  }
+
+  .link {
+    opacity: 0.5;
+    text-decoration: underline;
+    font-size: 10px;
+    margin-top: 4px;
+  }
+
+  .logo {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 2px solid #e7c416;
+  }
+
+  .logo svg {
+    height: 20px;
+    width: auto;
+    fill: #ffffff;
+    color: #fff;
+  }
+
+  .row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .logo:after {
+    width: 4px;
+    height: 4px;
+    content: '';
+    border-radius: 50%;
+    background-color: #e7c416;
   }
 `;
 
@@ -111,15 +153,32 @@ export default withOGImage<'query', keyof typeof Params>({
                   <h1>{projectName}</h1>
                 )}
 
-                {!error && (
+                {false && !error && (
                   <PrismicRichText
                     field={(statement as PrismicDocument)?.data?.description}
                   />
                 )}
               </div>
               <footer>
-                <div>{projectName}</div>
-                <div>theCodex.ru</div>
+                <div className="row">
+                  <div>{projectName}</div>
+                  <div className="link">theCodex.ru</div>
+                </div>
+                <div>
+                  <div className="logo">
+                    <svg
+                      width="6"
+                      height="9"
+                      viewBox="0 0 6 9"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M2.904 7.608H5.016V9H1.968C1.44 8.504 1.04 7.876 0.768 7.116C0.496 6.356 0.36 5.576 0.36 4.776C0.36 3.968 0.512 3.192 0.816 2.448C1.12 1.704 1.572 1.088 2.172 0.599999H5.016V2.04H2.904C2.688 2.288 2.5 2.688 2.34 3.24C2.188 3.792 2.112 4.32 2.112 4.824C2.112 5.328 2.188 5.856 2.34 6.408C2.5 6.96 2.688 7.36 2.904 7.608Z"
+                        fill="currentColor"
+                      />
+                    </svg>
+                  </div>
+                </div>
               </footer>
             </div>
           </body>
@@ -127,12 +186,5 @@ export default withOGImage<'query', keyof typeof Params>({
       );
     },
   },
-  quality: 90,
-  width: 600,
-  height: 430,
-  cacheControl: 'public, max-age=604800, immutable',
-
-  dev: {
-    inspectHtml: false,
-  },
+  ...ogImageConfig,
 });

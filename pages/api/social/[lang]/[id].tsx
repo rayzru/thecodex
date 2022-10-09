@@ -75,13 +75,13 @@ const style = `
     text-transform: uppercase;
     display: flex;
     margin-bottom: 1.5em;
-    font-size: .8em;
+    font-size: 1em;
   }
 
   .link {
-    opacity: 0.5;
+    opacity: 0.8;
     text-decoration: underline;
-    font-size: 0.6em;
+    font-size: 0.8em;
     margin-top: 0.1em;
   }
 

@@ -19,7 +19,9 @@ const chromiumOptions = [
   '--disable-domain-reliability',
   '--disable-extensions',
   '--disable-features=AudioServiceOutOfProcess',
+  // '--disable-gpu',
   '--disable-hang-monitor',
+  '--disable-mobile-emulation',
   '--disable-ipc-flooding-protection',
   '--disable-notifications',
   '--disable-offer-store-unmasked-wallet-cards',
@@ -42,8 +44,6 @@ const chromiumOptions = [
   '--password-store=basic',
   '--use-gl=swiftshader',
   '--use-mock-keychain',
-  '--disable-gpu',
-  '--no-sandbox',
   '--lang=en',
 ];
 

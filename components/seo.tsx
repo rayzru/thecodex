@@ -25,6 +25,7 @@ const SEO: React.FC<PropsWithChildren<Props>> = ({
   children,
 }) => {
   const { type, width, height } = ogImageConfig;
+  const image = imageUrl;
   return (
     <>
       <Head>
@@ -35,7 +36,7 @@ const SEO: React.FC<PropsWithChildren<Props>> = ({
         />
 
         <meta name="twitter:creator" content="@rayz61" />
-        <meta name="twitter:card" content="summary_large_image" />
+
         <meta property="og:type" content={pageType} />
         <meta property="og:url" content={url} />
 
@@ -65,11 +66,12 @@ const SEO: React.FC<PropsWithChildren<Props>> = ({
 
         {imageUrl && (
           <>
-            <meta name="twitter:image" content={imageUrl} />
-            <meta property="og:image" content={imageUrl} />
+            <meta property="og:image" content={image} />
             <meta property="og:image:type" content={`image/${type}`} />
             <meta property="og:image:width" content={width?.toString()} />
             <meta property="og:image:height" content={height?.toString()} />
+            <meta name="twitter:image" content={image} />
+            <meta name="twitter:card" content="summary_large_image" />
           </>
         )}
 

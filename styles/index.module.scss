@@ -43,11 +43,11 @@
   @include text-title();
 
   color: #ffffff88;
-  font-size: 24px;
   margin-bottom: 0;
 }
 
 .description {
+  @include text-regular();
   flex: 1 1 0;
   min-width: 0;
   line-height: 1.3em;

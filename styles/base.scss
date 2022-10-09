@@ -1,6 +1,38 @@
 $color-yellow: #e7c416;
 $color-yellow-transparent: #e7c41688;
 
+$breakpoints: (
+  'phone-vertical': 320px,
+  'phone-landspace': 576px,
+  'tablet-vertical': 768px,
+  'tablet-landscape': 1080px,
+  'laptop': 1280px,
+  'desktop-medium': 1366px,
+  'desktop-large': 1920px,
+  'desktop-extra-large': 2560px,
+) !default;
+
+@function breakpoint($value) {
+  @if map-has-key($breakpoints, $value) {
+    @return map-get($breakpoints, $value);
+  } @else {
+    @warn "Unfortunately, no value could be retrieved from `#{$value}`. "
+        + "Available breakpoints are: #{map-keys($breakpoints)}.";
+  }
+  @return 0;
+}
+
+@mixin mf-breakpoint-at($val) {
+  @if map-has-key($breakpoints, $val) {
+    @media (min-width: map-get($breakpoints, $val)) {
+      @content;
+    }
+  } @else {
+    @warn "Unfortunately, no value could be retrieved from `#{$val}`. "
+        + "Available breakpoints are: #{map-keys($breakpoints)}.";
+  }
+}
+
 @mixin text {
   text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.3);
   color: #fff;
@@ -9,24 +41,48 @@ $color-yellow-transparent: #e7c41688;
 @mixin text-title {
   @include text();
   font-family: 'Oswald';
+
+  @include mf-breakpoint-at('phone-vertical') {
+    font-size: 1.5em;
+  }
+  @include mf-breakpoint-at('phone-landscape') {
+    font-size: 1.5em;
+  }
+  @include mf-breakpoint-at('tablet-vertical') {
+    font-size: 1.6em;
+  }
+  @include mf-breakpoint-at('tablet-landscape') {
+    font-size: 1.8em;
+  }
+  @include mf-breakpoint-at('laptop') {
+    font-size: 2em;
+  }
+  @include mf-breakpoint-at('desktop-medium') {
+    font-size: 2em;
+  }
 }
 
 @mixin text-regular {
   @include text();
-  font-size: 1em;
-  line-height: 1.4em;
-  font-family: 'Montserrat', sans-serif;
 
-  @media only screen and (min-width: 768px) {
-    font-size: 1.5em;
+  @include mf-breakpoint-at('phone-vertical') {
+    font-size: 0.8em;
   }
-
-  @media only screen and (max-width: 767px) {
+  @include mf-breakpoint-at('phone-landscape') {
     font-size: 1em;
   }
+  @include mf-breakpoint-at('tablet-vertical') {
+    font-size: 1.1em;
+  }
+  @include mf-breakpoint-at('tablet-landscape') {
+    font-size: 1.2em;
+  }
+  @include mf-breakpoint-at('laptop') {
+    font-size: 1.3em;
+  }
 
-  @media only screen and (max-width: 767px) and (orientation: portrait) {
-    font-size: 1em;
+  @include mf-breakpoint-at('desktop-medium') {
+    font-size: 1.4em;
   }
 
   a {

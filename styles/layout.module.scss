@@ -1,5 +1,21 @@
+@import '../styles/base.scss';
+
 .wrapper {
   display: flex;
   flex-flow: column;
   min-height: 100vh;
+
+  @include mf-breakpoint-at('phone-vertical') {
+    margin: 0 auto;
+  }
+
+  @include mf-breakpoint-at('tablet-landscape') {
+    max-width: breakpoint('tablet-vertical');
+    margin: 0 auto;
+  }
+
+  @include mf-breakpoint-at('desktop-large') {
+    max-width: breakpoint('laptop');
+    margin: 0 auto;
+  }
 }

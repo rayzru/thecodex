@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { BuildQueryURLArgs, predicate } from '@prismicio/client';
+import React, { useEffect, useRef, useState } from 'react';
+import * as prismic from '@prismicio/client';
 import { asText } from '@prismicio/helpers';
 import { PrismicRichText } from '@prismicio/react';
 import Footer from 'components/Footer';
@@ -31,38 +31,74 @@ const Statement: NextPage<Props> = ({
 }) => {
   const [queued, setQueued] = useState(false);
   const { uid, lang = 'ru', data } = statement;
-
   const title = asText(data?.title);
+  const refPrev = useRef<HTMLAnchorElement>(null);
+  const refNext = useRef<HTMLAnchorElement>(null);
   const descr = data?.excerpt
     ? data?.excerpt
     : asText(data?.description)?.split('. ', 1)[0];
 
-  const { asPath } = useRouter();
+  const { asPath, events } = useRouter();
   const URL = `${getDomain()}${asPath}`;
   const socialUrl = `${getDomain()}/api/social/${lang}/${uid}`;
 
   useEffect(() => {
-    function onKeyDown(e: KeyboardEventInit) {
-      if (queued) {
-        return;
+    let swipeStart = 0;
+
+    const onSwipeStart = (e: TouchEvent) => {
+      if (queued) return;
+      swipeStart = e.changedTouches[0].screenX;
+    };
+
+    function onSwipeEnd(e: TouchEvent) {
+      if (queued) return;
+
+      const swipeDelta = swipeStart
+        ? swipeStart - e.changedTouches[0].screenX
+        : 0;
+
+      if (swipeDelta < -10 && prevLink !== '/' && refPrev.current) {
+        refPrev.current.focus();
+        refPrev.current.click();
       }
-      if (e.key === 'ArrowLeft' && prevLink !== '/') {
-        setQueued(true);
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        router.push(prevLink).finally(() => setQueued(false));
+      if (swipeDelta > 10 && nextLink !== '/' && refNext.current) {
+        refNext.current.focus();
+        refNext.current.click();
       }
-      if (e.key === 'ArrowRight' && nextLink !== '/') {
-        setQueued(true);
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        router.push(nextLink).finally(() => setQueued(false));
+    }
+
+    function onKeyDown(e: KeyboardEvent) {
+      if (queued) return;
+
+      if (e.key === 'ArrowLeft' && prevLink !== '/' && refPrev.current) {
+        refPrev.current.focus();
+        refPrev.current.click();
+      }
+
+      if (e.key === 'ArrowRight' && nextLink !== '/' && refNext.current) {
+        refNext.current.focus();
+        refNext.current.click();
       }
     }
 
     document.addEventListener('keydown', onKeyDown);
+    document.addEventListener('touchstart', onSwipeStart);
+    document.addEventListener('touchend', onSwipeEnd);
+    events.on('routeChangeComplete', () => setQueued(false));
+
     return () => {
       document.removeEventListener('keydown', onKeyDown);
+      document.removeEventListener('touchstart', onSwipeStart);
+      document.removeEventListener('touchend', onSwipeEnd);
     };
-  }, [nextLink, prevLink, router, queued]);
+  }, [nextLink, prevLink, events, queued]);
+
+  const handleNextClick = () => {
+    setQueued(true);
+  };
+  const handlePrevClick = () => {
+    setQueued(true);
+  };
 
   return (
     <Layout>
@@ -111,18 +147,37 @@ const Statement: NextPage<Props> = ({
           <Link
             className={style.arrow_link}
             href={prevLink}
-            disabled={prevLink === '/'}
+            onClick={handlePrevClick}
+            elRef={refPrev}
+            disabled={prevLink === '/' || queued}
           >
             {String.fromCharCode(8592)}
           </Link>
 
           <Link
             className={style.arrow_link}
+            onClick={handleNextClick}
             href={nextLink}
-            disabled={nextLink === '/'}
+            elRef={refNext}
+            disabled={nextLink === '/' || queued}
           >
             {String.fromCharCode(8594)}
           </Link>
+
+          {queued && (
+            <div className="spinnerWrapper">
+              <svg className="spinner" viewBox="0 0 50 50">
+                <circle
+                  className="path"
+                  cx="25"
+                  cy="25"
+                  r="20"
+                  fill="none"
+                  strokeWidth="5"
+                />
+              </svg>
+            </div>
+          )}
         </nav>
       </Footer>
     </Layout>
@@ -148,30 +203,39 @@ export const getStaticProps: GetStaticProps = async ({
   };
   const statement = await client.getByUID('statement', uid, opts);
 
-  const nextOpts: Partial<BuildQueryURLArgs> = {
-    ...opts,
-    predicates: [predicate.at('document.type', 'statement')],
-    orderings: {
-      field: 'document.first_publication_date',
-      direction: 'desc',
-    },
+  const nextOpts: Partial<prismic.BuildQueryURLArgs> = {
+    lang: locale,
+    predicates: [prismic.predicate.at('document.type', 'statement')],
     after: statement.id,
-    pageSize: 1,
+    orderings: [
+      {
+        field: 'document.first_publication_date',
+        direction: 'asc',
+      },
+    ],
   };
 
-  const prevOpts: Partial<BuildQueryURLArgs> = {
-    ...nextOpts,
-    orderings: {
-      field: 'document.first_publication_date',
-      direction: 'asc',
-    },
+  const prevOpts: Partial<prismic.BuildQueryURLArgs> = {
+    lang: locale,
+    predicates: [prismic.predicate.at('document.type', 'statement')],
+    after: statement.id,
+    orderings: [
+      {
+        field: 'document.first_publication_date',
+        direction: 'desc',
+      },
+    ],
   };
 
   let nextStatement, prevStatement;
 
   try {
-    nextStatement = (await client.get(nextOpts))?.results?.[0];
-    prevStatement = (await client.get(prevOpts))?.results?.[0];
+    nextStatement = await client.getFirst(nextOpts);
+    // eslint-disable-next-line no-empty
+  } catch (err) {}
+
+  try {
+    prevStatement = await client.getFirst(prevOpts);
     // eslint-disable-next-line no-empty
   } catch (err) {}
 

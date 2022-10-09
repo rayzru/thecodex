@@ -29,6 +29,11 @@ const SEO: React.FC<PropsWithChildren<Props>> = ({
     <>
       <Head>
         <meta name="robots" content="index, nofollow" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+        />
+
         <meta name="twitter:creator" content="@rayz61" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta property="og:type" content={pageType} />

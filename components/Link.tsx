@@ -1,4 +1,4 @@
-import { FC, MutableRefObject, PropsWithChildren, RefObject } from 'react';
+import { FC, MutableRefObject, PropsWithChildren } from 'react';
 import NextLink from 'next/link';
 
 import style from '../styles/link.module.scss';
@@ -11,7 +11,7 @@ interface LinkProps {
   onClick?: () => void;
   elRef?: MutableRefObject<HTMLAnchorElement | null>;
 }
-// eslint-disable-next-line @typescript-eslint/ban-types
+
 const Link: FC<PropsWithChildren<LinkProps>> = ({
   children,
   href,

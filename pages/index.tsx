@@ -6,7 +6,8 @@ import Header from 'components/Header';
 import Layout from 'components/Layout';
 import Link from 'components/Link';
 import SEO from 'components/seo';
-import { getDomain, SiteSettings } from 'lib/settings';
+import { getDomain, getSettings, SiteSettings } from 'lib/settings';
+import { Locale } from 'lib/types';
 import { GetStaticProps, NextPage } from 'next';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
@@ -46,8 +47,11 @@ const Index: NextPage<Props> = ({ statements = [], settings, locale }) => {
           ))}
       </SEO>
 
-      <Header title={settings.title}>
+      <Header title={settings?.title || ''}>
         <nav className={style.locales}>
+          <a onClick={() => navigator.clipboard.writeText(URL)}>
+            {settings.copyLabel}
+          </a>
           {Object.entries(languages)
             .filter(([l]) => locale !== l)
             .map(([l, v]) => (
@@ -92,19 +96,10 @@ const Index: NextPage<Props> = ({ statements = [], settings, locale }) => {
 
 export default Index;
 
-export const getStaticProps: GetStaticProps = async ({
-  locale,
-  previewData,
-}) => {
-  const client = createClient({ previewData });
-  const opts = { lang: locale };
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  const client = createClient();
+  const settings = await getSettings(locale as Locale, client);
 
-  const settingsData = await client.getSingle('settings', opts);
-  const settings: SiteSettings = {
-    title: asText(settingsData.data.title) ?? 'The Codex',
-    description: asText(settingsData.data.description) ?? '',
-    locale,
-  };
   const statements = await client.getAllByType('statement', { lang: locale });
 
   return {

@@ -1,9 +1,8 @@
+import { Client } from '@prismicio/client';
+import { asText } from '@prismicio/helpers';
 import { NextApiOgImageConfig } from 'next-api-og-image';
 
-export enum Locale {
-  RU = 'ru',
-  EN = 'en-us',
-}
+import { Locale } from './types';
 
 const chromiumOptions = [
   '--autoplay-policy=user-gesture-required',
@@ -47,11 +46,11 @@ const chromiumOptions = [
   '--lang=en',
 ];
 
-export type LocaleType = Locale.RU | Locale.EN;
-
 export interface SiteSettings {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
+  copyLabel?: string;
+  copySuccess?: string;
   locale?: string;
 }
 
@@ -81,3 +80,17 @@ export const getDomain = () =>
   typeof window !== 'undefined' && window.location.origin
     ? window.location.origin
     : '';
+
+export const getSettings = async (
+  locale: Locale,
+  client: Client
+): Promise<SiteSettings> => {
+  const settingsData = await client.getSingle('settings', { lang: locale });
+  return {
+    title: asText(settingsData.data.title) || 'The Codex',
+    description: asText(settingsData.data.description) || '',
+    copyLabel: settingsData.data.copytoclipboard || '',
+    copySuccess: settingsData.data.successfullycopied || '',
+    locale,
+  };
+};

@@ -4,7 +4,7 @@ import { PrismicRichText } from '@prismicio/react';
 import { PrismicDocument } from '@prismicio/types';
 import { Montserat, Oswald } from 'lib/fonts';
 import { ogImageConfig } from 'lib/settings';
-import { Locales } from 'lib/strings';
+import { Locale, Locales } from 'lib/types';
 import { withOGImage } from 'next-api-og-image';
 import { createClient } from 'prismicio';
 
@@ -127,7 +127,8 @@ export default withOGImage<'query', keyof typeof Params>({
   template: {
     react: async ({ id, lang }) => {
       const client = createClient();
-      const locale = lang && Locales.includes(lang) ? lang : Locales[0];
+      const locale =
+        lang && Locales.includes(lang as Locale) ? lang : Locales[0];
       const opts = { lang: locale };
       let error = false;
       const settings = await client.getSingle('settings', opts);

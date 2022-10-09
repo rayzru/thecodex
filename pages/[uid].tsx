@@ -8,11 +8,11 @@ import Heading from 'components/Heading';
 import Layout from 'components/Layout';
 import Link from 'components/Link';
 import SEO from 'components/seo';
-import { getDomain, SiteSettings } from 'lib/settings';
+import { getDomain, getSettings, SiteSettings } from 'lib/settings';
 import { cleanString } from 'lib/strings';
-import { Statement } from 'lib/types';
+import { Locale, Statement } from 'lib/types';
 import { GetStaticProps, NextPage } from 'next';
-import router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { createClient, languages, linkResolver } from 'prismicio';
 
 import style from '../styles/page.module.scss';
@@ -123,7 +123,7 @@ const Statement: NextPage<Props> = ({
           ))}
       </SEO>
 
-      <Header title={settings.title} showLocales />
+      <Header title={settings.title || ''} showLocales />
 
       <main className={style.page}>
         <article className={style.description}>
@@ -186,21 +186,13 @@ const Statement: NextPage<Props> = ({
 
 export default Statement;
 
-export const getStaticProps: GetStaticProps = async ({
-  params,
-  locale,
-  previewData,
-}) => {
-  const client = createClient({ previewData });
+export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
+  const client = createClient();
+
+  const settings = await getSettings(locale as Locale, client);
 
   const opts = { lang: locale };
   const uid = params?.uid?.toString() || '';
-  const settingsData = await client.getSingle('settings', opts);
-  const settings: SiteSettings = {
-    title: asText(settingsData.data.title) || 'The Codex',
-    description: asText(settingsData.data.description) || '',
-    locale,
-  };
   const statement = await client.getByUID('statement', uid, opts);
 
   const nextOpts: Partial<prismic.BuildQueryURLArgs> = {

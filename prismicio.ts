@@ -2,7 +2,6 @@ import {
   createClient as prismicCreateClient,
   getRepositoryName,
 } from '@prismicio/client';
-import { CreateClientConfig, enableAutoPreviews } from '@prismicio/next';
 import { AlternateLanguage, PrismicDocument } from '@prismicio/types';
 
 export const apiEndpoint = 'https://thecodex.prismic.io/api/v2';
@@ -21,17 +20,7 @@ export const linkResolver = (
   return '/';
 };
 
-export const createClient = (config: CreateClientConfig = {}) => {
-  const client = prismicCreateClient(apiEndpoint);
-
-  enableAutoPreviews({
-    client,
-    previewData: config.previewData,
-    req: config.req,
-  });
-
-  return client;
-};
+export const createClient = () => prismicCreateClient(apiEndpoint);
 
 export const languages = {
   'en-us': 'English',

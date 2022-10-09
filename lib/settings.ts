@@ -5,6 +5,48 @@ export enum Locale {
   EN = 'en-us',
 }
 
+const chromiumOptions = [
+  '--autoplay-policy=user-gesture-required',
+  '--disable-background-networking',
+  '--disable-background-timer-throttling',
+  '--disable-backgrounding-occluded-windows',
+  '--disable-breakpad',
+  '--disable-browser-side-navigation',
+  '--disable-client-side-phishing-detection',
+  '--disable-component-update',
+  '--disable-default-apps',
+  '--disable-dev-shm-usage',
+  '--disable-domain-reliability',
+  '--disable-extensions',
+  '--disable-features=AudioServiceOutOfProcess',
+  '--disable-hang-monitor',
+  '--disable-ipc-flooding-protection',
+  '--disable-notifications',
+  '--disable-offer-store-unmasked-wallet-cards',
+  '--disable-popup-blocking',
+  '--disable-print-preview',
+  '--disable-prompt-on-repost',
+  '--disable-renderer-backgrounding',
+  '--disable-setuid-sandbox',
+  '--disable-speech-api',
+  '--disable-sync',
+  '--hide-scrollbars',
+  '--ignore-gpu-blacklist',
+  '--metrics-recording-only',
+  '--mute-audio',
+  '--no-default-browser-check',
+  '--no-first-run',
+  '--no-pings',
+  '--no-sandbox',
+  '--no-zygote',
+  '--password-store=basic',
+  '--use-gl=swiftshader',
+  '--use-mock-keychain',
+  '--disable-gpu',
+  '--no-sandbox',
+  '--lang=en',
+];
+
 export type LocaleType = Locale.RU | Locale.EN;
 
 export interface SiteSettings {
@@ -26,9 +68,10 @@ export type OGOptions = Omit<
 export const ogImageConfig: OGOptions = {
   // type: 'png',
   type: 'jpeg',
+  chrome: { args: chromiumOptions },
   quality: 80,
-  width: 1200,
-  height: 630,
+  width: 600,
+  height: 315,
   cacheControl: 'public, max-age=604800, immutable',
   dev: {
     inspectHtml: false,

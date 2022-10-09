@@ -69,7 +69,7 @@ export const ogImageConfig: OGOptions = {
   // type: 'png',
   type: 'jpeg',
   chrome: { args: chromiumOptions },
-  quality: 89,
+  quality: 92,
   width: 600,
   height: 315,
   cacheControl: 'public, max-age=604800, immutable',

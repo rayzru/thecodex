@@ -19,7 +19,7 @@ const chromiumOptions = [
   '--disable-domain-reliability',
   '--disable-extensions',
   '--disable-features=AudioServiceOutOfProcess',
-  // '--disable-gpu',
+  '--disable-gpu',
   '--disable-hang-monitor',
   '--disable-mobile-emulation',
   '--disable-ipc-flooding-protection',
@@ -67,11 +67,12 @@ export type OGOptions = Omit<
 
 export const ogImageConfig: OGOptions = {
   // type: 'png',
-  type: 'jpeg',
+  type: 'webp',
+  // type: 'jpeg',
   chrome: { args: chromiumOptions },
-  quality: 92,
-  width: 600,
-  height: 315,
+  // quality: 60,
+  width: 1200,
+  height: 630,
   cacheControl: 'public, max-age=604800, immutable',
   dev: {
     inspectHtml: false,

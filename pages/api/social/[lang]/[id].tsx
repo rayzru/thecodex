@@ -55,7 +55,6 @@ const style = `
     flex: 1;
     padding: 0 50px;
     background-color: black;
-    background: linear-gradient(132deg, black, #1b222c);
   }
 
   .content {

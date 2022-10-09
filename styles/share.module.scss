@@ -1,0 +1,16 @@
+@import '../styles/base.scss';
+
+.icon {
+  position: absolute;
+  color: #eeeeee55;
+  height: 11px;
+  display: inline-block;
+  fill: currentColor;
+  left: -16px;
+}
+
+.link {
+  position: relative;
+  margin-left: 16px;
+  display: inline-block;
+}

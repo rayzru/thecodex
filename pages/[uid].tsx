@@ -8,7 +8,7 @@ import Heading from 'components/Heading';
 import Layout from 'components/Layout';
 import Link from 'components/Link';
 import SEO from 'components/seo';
-import { useSnackbarContext } from 'components/SnackbarProvider';
+import Share from 'components/Share';
 import { getDomain, getSettings, SiteSettings } from 'lib/settings';
 import { cleanString } from 'lib/strings';
 import { Locale, Statement } from 'lib/types';
@@ -31,7 +31,6 @@ const Statement: NextPage<Props> = ({
   prevLink,
 }) => {
   const [queued, setQueued] = useState(false);
-  const { openSnackbar } = useSnackbarContext();
 
   const { uid, lang = 'ru', data } = statement;
   const title = asText(data?.title);
@@ -144,20 +143,14 @@ const Statement: NextPage<Props> = ({
                 {l.lang === 'en-us' ? languages['en-us'] : languages['ru']}
               </Link>
             ))}
-            <Link
-              key={'copy'}
-              href="#"
+            <Share
               locale={settings.locale}
               className={style.locale}
-              onClick={(e) => {
-                // console.log(e);
-                e.preventDefault();
-                openSnackbar(settings.copySuccess as string);
-                navigator.clipboard.writeText(URL);
-              }}
+              url={URL}
+              message={settings.copySuccess as string}
             >
               {settings.copyLabel}
-            </Link>
+            </Share>
           </nav>
         )}
         <nav className={style.nav_row}>

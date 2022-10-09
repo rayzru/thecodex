@@ -27,17 +27,13 @@
 .title {
   @include text-title();
 
-  @include mf-breakpoint-at('phone-vertical') {
-    font-size: 2em;
-  }
-  @include mf-breakpoint-at('phone-landscape') {
-    font-size: 2.2em;
-  }
+  font-size: 2.4em;
+
   @include mf-breakpoint-at('tablet-vertical') {
-    font-size: 2.4em;
+    font-size: 2.6em;
   }
   @include mf-breakpoint-at('tablet-landscape') {
-    font-size: 2.6em;
+    font-size: 2.8em;
   }
   @include mf-breakpoint-at('laptop') {
     font-size: 3em;
@@ -46,4 +42,13 @@
 
 .description {
   @include text-regular();
+
+  font-size: 1em;
+
+  @include mf-breakpoint-at('tablet-vertical') {
+    font-size: 1.2em;
+  }
+  @include mf-breakpoint-at('laptop') {
+    font-size: 1.3em;
+  }
 }

@@ -4,18 +4,16 @@
   display: flex;
   flex-flow: column;
   min-height: 100vh;
+  margin: 0 2em;
+  max-width: none;
 
-  @include mf-breakpoint-at('phone-vertical') {
+  @include mf-breakpoint-at('tablet-vertical') {
     margin: 0 auto;
+    max-width: breakpoint('tablet-vertical');
   }
 
   @include mf-breakpoint-at('tablet-landscape') {
+    margin: 0 auto;
     max-width: breakpoint('tablet-vertical');
-    margin: 0 auto;
-  }
-
-  @include mf-breakpoint-at('desktop-large') {
-    max-width: breakpoint('laptop');
-    margin: 0 auto;
   }
 }

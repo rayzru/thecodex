@@ -41,49 +41,10 @@ $breakpoints: (
 @mixin text-title {
   @include text();
   font-family: 'Oswald';
-
-  @include mf-breakpoint-at('phone-vertical') {
-    font-size: 1.5em;
-  }
-  @include mf-breakpoint-at('phone-landscape') {
-    font-size: 1.5em;
-  }
-  @include mf-breakpoint-at('tablet-vertical') {
-    font-size: 1.6em;
-  }
-  @include mf-breakpoint-at('tablet-landscape') {
-    font-size: 1.8em;
-  }
-  @include mf-breakpoint-at('laptop') {
-    font-size: 2em;
-  }
-  @include mf-breakpoint-at('desktop-medium') {
-    font-size: 2em;
-  }
 }
 
 @mixin text-regular {
   @include text();
-
-  @include mf-breakpoint-at('phone-vertical') {
-    font-size: 0.8em;
-  }
-  @include mf-breakpoint-at('phone-landscape') {
-    font-size: 1em;
-  }
-  @include mf-breakpoint-at('tablet-vertical') {
-    font-size: 1.1em;
-  }
-  @include mf-breakpoint-at('tablet-landscape') {
-    font-size: 1.2em;
-  }
-  @include mf-breakpoint-at('laptop') {
-    font-size: 1.3em;
-  }
-
-  @include mf-breakpoint-at('desktop-medium') {
-    font-size: 1.4em;
-  }
 
   a {
     color: #def;

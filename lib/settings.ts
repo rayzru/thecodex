@@ -66,11 +66,9 @@ export type OGOptions = Omit<
 >;
 
 export const ogImageConfig: OGOptions = {
-  // type: 'png',
-  type: 'webp',
-  // type: 'jpeg',
+  type: 'jpeg',
   chrome: { args: chromiumOptions },
-  // quality: 60,
+  quality: 60,
   width: 1200,
   height: 630,
   cacheControl: 'public, max-age=604800, immutable',

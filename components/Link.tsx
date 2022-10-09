@@ -1,4 +1,4 @@
-import { FC, MutableRefObject, PropsWithChildren } from 'react';
+import { FC, MouseEvent, MutableRefObject, PropsWithChildren } from 'react';
 import NextLink from 'next/link';
 
 import style from '../styles/link.module.scss';
@@ -8,7 +8,7 @@ interface LinkProps {
   href: string;
   locale?: string;
   className?: string;
-  onClick?: () => void;
+  onClick?: (e: MouseEvent<HTMLAnchorElement>) => void;
   elRef?: MutableRefObject<HTMLAnchorElement | null>;
 }
 
@@ -29,7 +29,7 @@ const Link: FC<PropsWithChildren<LinkProps>> = ({
   ) : (
     <NextLink href={href} passHref={true} locale={locale}>
       <a
-        onClick={() => onClick && onClick()}
+        onClick={(e) => onClick && onClick(e)}
         ref={elRef}
         className={`${className ? className : ''} ${style.link}`}
         {...rest}

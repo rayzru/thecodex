@@ -1,5 +1,6 @@
 import React from 'react';
 import { PrismicProvider } from '@prismicio/react';
+import SnackbarProvider from 'components/SnackbarProvider';
 import { AppProps } from 'next/app';
 import Link from 'next/link';
 import { linkResolver } from 'prismicio';
@@ -17,7 +18,9 @@ const App = ({ Component, pageProps }: AppProps) => {
         </Link>
       )}
     >
-      <Component {...pageProps} />
+      <SnackbarProvider>
+        <Component {...pageProps} />
+      </SnackbarProvider>
     </PrismicProvider>
   );
 };

@@ -6,6 +6,7 @@ import Header from 'components/Header';
 import Layout from 'components/Layout';
 import Link from 'components/Link';
 import SEO from 'components/seo';
+import { useSnackbarContext } from 'components/SnackbarProvider';
 import { getDomain, getSettings, SiteSettings } from 'lib/settings';
 import { Locale } from 'lib/types';
 import { GetStaticProps, NextPage } from 'next';
@@ -25,6 +26,8 @@ const Index: NextPage<Props> = ({ statements = [], settings, locale }) => {
   const { asPath } = useRouter();
   const URL = `${getDomain()}${asPath}`;
   const socialUrl = `${getDomain()}/api/social/${locale}}/-`;
+
+  const { openSnackbar } = useSnackbarContext();
 
   return (
     <Layout>
@@ -49,9 +52,20 @@ const Index: NextPage<Props> = ({ statements = [], settings, locale }) => {
 
       <Header title={settings?.title || ''}>
         <nav className={style.locales}>
-          <a onClick={() => navigator.clipboard.writeText(URL)}>
+          <Link
+            key={'copy'}
+            href="#"
+            locale={settings.locale}
+            className={style.locale}
+            onClick={(e) => {
+              // console.log(e);
+              e.preventDefault();
+              openSnackbar(settings.copySuccess as string);
+              navigator.clipboard.writeText(URL);
+            }}
+          >
             {settings.copyLabel}
-          </a>
+          </Link>
           {Object.entries(languages)
             .filter(([l]) => locale !== l)
             .map(([l, v]) => (

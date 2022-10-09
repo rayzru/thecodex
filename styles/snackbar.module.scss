@@ -1,0 +1,32 @@
+@import '../styles/base.scss';
+
+.wrapper {
+  margin-top: auto;
+  margin-bottom: 1em;
+}
+
+.message {
+  position: absolute;
+  transition: all;
+  background-color: $color-yellow;
+  color: #000;
+  padding: 0.4em 1em;
+  left: 50%;
+  width: 130px;
+  margin-left: -50px;
+  border-radius: 1em;
+  text-align: center;
+  top: -200px;
+  opacity: 0;
+  transition: all 0.5s;
+  font-size: 0.7em;
+}
+
+.default {
+  color: #000;
+}
+
+.open {
+  top: 22px;
+  opacity: 1;
+}

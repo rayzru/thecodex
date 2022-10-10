@@ -136,23 +136,22 @@ const Statement: NextPage<Props> = ({
         </article>
       </main>
       <Footer>
-        {statement?.alternate_languages?.length > 0 && (
-          <nav className={style.nav_row}>
-            {statement.alternate_languages.map((l) => (
+        <nav className={style.nav_row}>
+          <Share
+            locale={settings.locale}
+            className={style.locale}
+            url={URL}
+            message={settings.copySuccess as string}
+          >
+            {settings.copyLabel}
+          </Share>
+          {statement?.alternate_languages?.length > 0 &&
+            statement.alternate_languages.map((l) => (
               <Link key={l.uid} href={linkResolver(l)} locale={l.lang}>
                 {l.lang === 'en-us' ? languages['en-us'] : languages['ru']}
               </Link>
             ))}
-            <Share
-              locale={settings.locale}
-              className={style.locale}
-              url={URL}
-              message={settings.copySuccess as string}
-            >
-              {settings.copyLabel}
-            </Share>
-          </nav>
-        )}
+        </nav>
         <nav className={style.nav_row}>
           <Link
             className={style.arrow_link}

@@ -50,6 +50,13 @@ const Index: NextPage<Props> = ({ statements = [], settings, locale }) => {
 
       <Header title={settings?.title || ''}>
         <nav className={style.locales}>
+          {Object.entries(languages)
+            .filter(([l]) => locale !== l)
+            .map(([l, v]) => (
+              <Link key={l} href="/" locale={l} className={style.locale}>
+                {v}
+              </Link>
+            ))}
           <Share
             locale={settings.locale}
             className={style.locale}
@@ -58,13 +65,6 @@ const Index: NextPage<Props> = ({ statements = [], settings, locale }) => {
           >
             {settings.copyLabel}
           </Share>
-          {Object.entries(languages)
-            .filter(([l]) => locale !== l)
-            .map(([l, v]) => (
-              <Link key={l} href="/" locale={l} className={style.locale}>
-                {v}
-              </Link>
-            ))}
         </nav>
       </Header>
       <div className={style.list}>

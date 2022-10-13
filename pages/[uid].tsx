@@ -45,27 +45,40 @@ const Statement: NextPage<Props> = ({
   const socialUrl = `${getDomain()}/api/social/${lang}/${uid}`;
 
   useEffect(() => {
-    let swipeStart = 0;
+    let swipeStartX = 0;
+    let swipeStartY = 0;
 
     const onSwipeStart = (e: TouchEvent) => {
       if (queued) return;
-      swipeStart = e.changedTouches[0].screenX;
+      swipeStartX = e.changedTouches[0].screenX;
+      swipeStartY = e.changedTouches[0].screenY;
     };
 
     function onSwipeEnd(e: TouchEvent) {
       if (queued) return;
 
-      const swipeDelta = swipeStart
-        ? swipeStart - e.changedTouches[0].screenX
+      const swipeXDelta = swipeStartX
+        ? swipeStartX - e.changedTouches[0].screenX
         : 0;
 
-      if (swipeDelta < -10 && prevLink !== '/' && refPrev.current) {
-        refPrev.current.focus();
-        refPrev.current.click();
-      }
-      if (swipeDelta > 10 && nextLink !== '/' && refNext.current) {
-        refNext.current.focus();
-        refNext.current.click();
+      const swipeYDelta = swipeStartY
+        ? swipeStartY - e.changedTouches[0].screenY
+        : 0;
+
+      if (
+        swipeXDelta > swipeYDelta &&
+        prevLink !== '/' &&
+        refPrev.current &&
+        refNext.current
+      ) {
+        if (swipeXDelta < -130) {
+          refPrev.current.focus();
+          refPrev.current.click();
+        }
+        if (swipeXDelta > 130) {
+          refNext.current.focus();
+          refNext.current.click();
+        }
       }
     }
 

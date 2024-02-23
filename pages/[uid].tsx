@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as prismic from '@prismicio/client';
 import { asText } from '@prismicio/helpers';
 import { PrismicRichText } from '@prismicio/react';
-import { RichTextField } from '@prismicio/types';
 import Footer from 'components/Footer';
 import Header from 'components/Header';
 import Heading from 'components/Heading';

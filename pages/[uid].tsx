@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as prismic from '@prismicio/client';
 import { asText } from '@prismicio/helpers';
 import { PrismicRichText } from '@prismicio/react';
+import { RichTextField } from '@prismicio/types';
 import Footer from 'components/Footer';
 import Header from 'components/Header';
 import Heading from 'components/Heading';
@@ -146,7 +147,7 @@ const Statement: NextPage<Props> = ({
           <Heading headingLevel="h1" className={style.title}>
             {title}
           </Heading>
-          <PrismicRichText field={ statement?.data?.description ?? [] } />
+          { statement?.data?.description && <PrismicRichText field={ statement?.data?.description as prismic.RichTextField } /> }
         </article>
       </main>
       <Footer>

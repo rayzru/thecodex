@@ -1,5 +1,4 @@
 import React from 'react';
-import { GoogleAnalytics } from '@next/third-parties/google';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 
 export default class MyDocument extends Document {
@@ -12,7 +11,13 @@ export default class MyDocument extends Document {
           <meta name="theme-color" content="black" />
           <link rel="manifest" href="/manifest.json" />
           <link rel="icon" href="/favicon.svg" />
-          <GoogleAnalytics gaId="G-SSCV7PVEB3" />
+          <script async src={ `https://www.googletagmanager.com/gtag/js?id=G-SSCV7PVEB3` } />
+          <script
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={ {
+              __html: `window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date()); gtag('config', "G-SSCV7PVEB3}");` } } />
         </Head>
         <body>
           <Main />

@@ -11,13 +11,13 @@ import '../styles/defaults.scss';
 const App = ({ Component, pageProps }: AppProps) => {
   return (
     <PrismicProvider
-      linkResolver={linkResolver}
-      internalLinkComponent={({ href, ...props }) => (
+      linkResolver={ linkResolver }
+      internalLinkComponent={ ({ href, ...props }) => (
         <Link href={ href } { ...props } />
-      )}
+      ) }
     >
       <SnackbarProvider>
-        <Component {...pageProps} />
+        <Component { ...pageProps } />
       </SnackbarProvider>
     </PrismicProvider>
   );

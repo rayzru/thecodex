@@ -27,13 +27,13 @@ const Share: React.FunctionComponent<PropsWithChildren<Props>> = ({
       key={'copy'}
       href="#"
       locale={locale}
-      onClick={(e) => {
-        // console.log(e);
+      onClick={ (e) => {
         e.preventDefault();
         openSnackbar(message);
         navigator.clipboard.writeText(url);
       }}
     >
+      <>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className={style.icon}
@@ -49,6 +49,7 @@ const Share: React.FunctionComponent<PropsWithChildren<Props>> = ({
         <path d="m8.59 13.51 6.83 3.98M15.41 6.51l-6.82 3.98" />
       </svg>
       {children}
+      </>
     </Link>
   );
 };

@@ -1,4 +1,5 @@
 import { FC, MouseEvent, MutableRefObject, PropsWithChildren } from 'react';
+import { clsx } from 'clsx';
 import NextLink from 'next/link';
 
 import style from '../styles/link.module.scss';
@@ -22,20 +23,23 @@ const Link: FC<PropsWithChildren<LinkProps>> = ({
   className = '',
   ...rest
 }) => {
-  return disabled ? (
-    <a className={`${className ? className : ''} ${style.disabled}`} {...rest}>
+  return disabled && !href ? (
+    <span
+      className={ clsx(className, style.disabled) }
+      { ...rest }
+    >
       {children}
-    </a>
+    </span>
   ) : (
-    <NextLink href={href} passHref={true} locale={locale}>
-      <a
-        onClick={(e) => onClick && onClick(e)}
-        ref={elRef}
-        className={`${className ? className : ''} ${style.link}`}
-        {...rest}
+      <NextLink
+        href={ href }
+        locale={ locale }
+        onClick={ (e) => onClick && onClick(e) }
+        ref={ elRef }
+        className={ clsx(className, style.link) }
+        { ...rest }
       >
-        {children}
-      </a>
+        { children }
     </NextLink>
   );
 };

@@ -13,9 +13,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     <PrismicProvider
       linkResolver={linkResolver}
       internalLinkComponent={({ href, ...props }) => (
-        <Link href={href}>
-          <a {...props} />
-        </Link>
+        <Link href={ href } { ...props } />
       )}
     >
       <SnackbarProvider>

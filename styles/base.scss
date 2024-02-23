@@ -47,6 +47,7 @@ $breakpoints: (
   @include text();
 
   a {
-    color: #def;
+    color: #eff;
+    text-decoration: none;
   }
 }

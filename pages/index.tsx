@@ -83,13 +83,13 @@ const Index: NextPage<Props> = ({ statements = [], settings, locale }) => {
               lang: locale,
             };
             return (
-              <NextLink key={uid} href={linkResolver(link)} passHref>
-                <a className={style.card}>
-                  <h2 className={style.title}>{asText(title)}</h2>
-                  <div className={style.description}>
-                    <p>{descr}</p>
+              <NextLink key={ uid } href={ linkResolver(link) } className={ style.card } >
+                <div >
+                  <h2 className={ style.title }>{ asText(title) }</h2>
+                  <div className={ style.description }>
+                    <p>{ descr }</p>
                   </div>
-                </a>
+                </div>
               </NextLink>
             );
           },

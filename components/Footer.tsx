@@ -1,4 +1,5 @@
 import { PropsWithChildren } from 'react';
+import Link from 'next/link';
 
 import style from '../styles/footer.module.scss';
 
@@ -8,30 +9,30 @@ const Footer: React.FC<PropsWithChildren<{}>> = ({ children }) => {
     <footer className={style.wrapper}>
       {children}
       <div className={style.credentials}>
-        <a
+        <Link 
           className={style.link}
           target={'_blank'}
           href="https://andrew.rumm.im"
           rel="noreferrer"
         >
           Andrew Rumm
-        </a>
-        <a
+        </Link>
+        <Link 
           className={style.link}
           target={'_blank'}
           href="https://t.me/rayzru"
           rel="noreferrer"
         >
           Telegram
-        </a>
-        <a
+        </Link>
+        <Link 
           className={style.link}
           target={'_blank'}
           href="https://github.com/rayzru"
           rel="noreferrer"
         >
           Github
-        </a>
+        </Link>
       </div>
     </footer>
   );

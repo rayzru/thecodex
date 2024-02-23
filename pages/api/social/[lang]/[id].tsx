@@ -155,13 +155,7 @@ export default withOGImage<'query', keyof typeof Params>({
                   />
                 ) : (
                   <h1>{projectName}</h1>
-                )}
-
-                {false && !error && (
-                  <PrismicRichText
-                    field={(statement as PrismicDocument)?.data?.description}
-                  />
-                )}
+                ) } 
               </div>
               <footer>
                 <div className="row">

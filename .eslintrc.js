@@ -1,78 +1,59 @@
 module.exports = {
   env: {
     browser: true,
-    es6: true,
-    node: true,
+    es2021: true,
   },
-  extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:react-hooks/recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/recommended-requiring-type-checking',
-    'plugin:import/warnings',
-    'plugin:import/errors',
-    'plugin:import/typescript',
-    'prettier',
-    'next',
-  ],
-  plugins: [
-    '@typescript-eslint',
-    'simple-import-sort',
-    'react',
-    'react-hooks',
-    'prettier',
-  ],
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    project: `./tsconfig.json`,
-    ecmaFeatures: {
-      jsx: true,
+  overrides: [
+    {
+      env: {
+        node: true,
+      },
+      files: ['.eslintrc.{js,cjs}'],
+      parserOptions: {
+        sourceType: 'module',
+      },
     },
-  },
+  ],
   settings: {
-    react: {
+        react: {
       version: 'detect',
     },
     'import/resolver': {
-      typescript: {},
+      typescript: {}, // this loads <rootdir>/tsconfig.json to eslint
     },
   },
-  ignorePatterns: ['node_modules/', 'dist/', 'out/', '.next/'],
+  extends: [
+    'plugin:@typescript-eslint/recommended',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
+    'plugin:sonarjs/recommended',
+     'next',
+  ],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    project: './tsconfig.json',
+        ecmaFeatures: {
+      jsx: true,
+    },
+  },
+  plugins: ['simple-import-sort', 'import', 'sonarjs'],
   rules: {
-    'react/prop-types': 'off',
-    '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/camelcase': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
-    '@typescript-eslint/no-unsafe-return': 'off',
-    '@typescript-eslint/no-unsafe-assignment': 'off',
-    '@typescript-eslint/no-unsafe-member-access': 'off',
-    '@typescript-eslint/no-floating-promises': 'off',
-    '@typescript-eslint/no-misused-promises': 'off',
-    '@typescript-eslint/no-unsafe-call': 'off',
-    '@typescript-eslint/restrict-plus-operands': 'warn',
-    '@typescript-eslint/restrict-template-expressions': 'off',
-    '@typescript-eslint/unbound-method': 'off',
-    'react/react-in-jsx-scope': 'off',
-    'react/display-name': 'off',
-    'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'off',
-    'react/self-closing-comp': 'warn',
-    'import/no-unresolved': 'error',
-    'import/no-named-as-default': 'off',
-    '@typescript-eslint/no-unsafe-argument': 'off',
-    semi: ['error', 'always'],
-    'jsx-quotes': ['error', 'prefer-double'],
-    indent: ['error', 2, { SwitchCase: 1 }],
-    quotes: ['error', 'single', { avoidEscape: true }],
+    '@typescript-eslint/quotes': [
+      'error',
+      'single',
+      {
+        avoidEscape: true,
+        allowTemplateLiterals: true,
+      },
+    ],
+    semi: [2, 'always'],
     'simple-import-sort/imports': [
       'error',
       {
         groups: [
           ['^react', '^@?\\w'],
+          ['^@(/.*|$)'],
           [
-            '^app(/.*|$)',
             '^\\.\\.(?!/?$)',
             '^\\.\\./?$',
             '^\\./(?=.*/)(?!/?$)',
@@ -87,9 +68,9 @@ module.exports = {
     'simple-import-sort/exports': 'error',
     'sort-imports': 'off',
     'import/order': 'off',
+    'import/first': 'error',
+    'import/newline-after-import': 'error',
     'import/no-duplicates': 'error',
     'no-duplicate-imports': 'error',
-    'no-dupe-class-members': 'error',
-    'prettier/prettier': ['error', { singleQuote: true, parser: 'typescript' }],
   },
 };

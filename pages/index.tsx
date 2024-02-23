@@ -31,10 +31,10 @@ const Index: NextPage<Props> = ({ statements = [], settings, locale }) => {
     <Layout>
       <SEO
         title={settings.title}
-        url={URL}
-        imageUrl={socialUrl}
-        siteName={settings.title}
-        locale={locale}
+        url={ URL }
+        imageUrl={ socialUrl }
+        siteName={ settings.title }
+        locale={ locale } 
       >
         {Object.entries(languages)
           .filter(([l]) => locale !== l)

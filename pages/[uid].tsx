@@ -17,6 +17,7 @@ import { useRouter } from 'next/router';
 import { createClient, languages, linkResolver } from 'prismicio';
 
 import style from '../styles/page.module.scss';
+
 interface Props {
   statement: Statement;
   settings: SiteSettings;
@@ -145,7 +146,7 @@ const Statement: NextPage<Props> = ({
           <Heading headingLevel="h1" className={style.title}>
             {title}
           </Heading>
-          <PrismicRichText field={statement?.data?.description} />
+          <PrismicRichText field={ statement?.data?.description ?? [] } />
         </article>
       </main>
       <Footer>

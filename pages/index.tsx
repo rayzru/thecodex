@@ -92,7 +92,7 @@ const Index: NextPage<Props> = ({ statements = [], settings, locale }) => {
                 </a>
               </NextLink>
             );
-          }
+          },
         )}
       </div>
       <Footer />

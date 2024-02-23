@@ -12,13 +12,7 @@ export default class MyDocument extends Document {
           <link rel="manifest" href="/manifest.json" />
           <link rel="icon" href="/favicon.svg" />
           <script async src="https://www.googletagmanager.com/gtag/js?id=G-SSCV7PVEB3"></script>
-          <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){
-              dataLayer.push(arguments);
-            }
-            gtag('js', new Date());
-            gtag('config', 'G-SSCV7PVEB3');
+          <script>{ `window.dataLayer = window.dataLayer || [];\nfunction gtag(){dataLayer.push(arguments);}\ngtag('js', new Date());gtag('config', 'G-SSCV7PVEB3');` }
           </script>
         </Head>
         <body>

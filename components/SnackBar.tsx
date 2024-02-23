@@ -9,7 +9,7 @@ export interface SnackBarProps {
 
 const SnackBar = ({ message, id }: SnackBarProps) => {
   const [active, setActive] = useState(false);
-  const [timer, setTimer] = useState(0);
+  const [, setTimer] = useState(0);
 
   // allow animation to slide up from the bottom of view point
   useEffect(() => {

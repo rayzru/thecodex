@@ -10,7 +10,7 @@ export const useSnackbar = () => {
   const openSnackbar = useCallback(
     (message: string) =>
       setState({ message, id: new Date().getTime().toString() }),
-    []
+    [],
   );
 
   const renderSnackbar = () => {

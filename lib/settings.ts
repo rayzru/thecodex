@@ -83,7 +83,7 @@ export const getDomain = () =>
 
 export const getSettings = async (
   locale: Locale,
-  client: Client
+  client: Client,
 ): Promise<SiteSettings> => {
   const settingsData = await client.getSingle('settings', { lang: locale });
   return {

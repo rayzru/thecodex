@@ -11,10 +11,20 @@ export default class MyDocument extends Document {
           <meta name="theme-color" content="black" />
           <link rel="manifest" href="/manifest.json" />
           <link rel="icon" href="/favicon.svg" />
+          <script async src="https://www.googletagmanager.com/gtag/js?id=G-SSCV7PVEB3"></script>
+          <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){
+              dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+            gtag('config', 'G-SSCV7PVEB3');
+          </script>
         </Head>
         <body>
           <Main />
           <NextScript />
+          @babel/plugin-proposal-decorators
         </body>
       </Html>
     );

@@ -42,7 +42,7 @@ const SEO: React.FC<PropsWithChildren<Props>> = ({
 
         {locale && (
           <>
-            <meta http-equiv="Content-Language" lang={locale} />
+            <meta httpEquiv="Content-Language" lang={ locale } />
             <meta property="og:locale" content={locale} />
           </>
         )}

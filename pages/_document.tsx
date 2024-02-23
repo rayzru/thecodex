@@ -1,6 +1,6 @@
 import React from 'react';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
-
 export default class MyDocument extends Document {
   render(): JSX.Element {
     return (
@@ -11,14 +11,11 @@ export default class MyDocument extends Document {
           <meta name="theme-color" content="black" />
           <link rel="manifest" href="/manifest.json" />
           <link rel="icon" href="/favicon.svg" />
-          <script async src="https://www.googletagmanager.com/gtag/js?id=G-SSCV7PVEB3"></script>
-          <script>{ `window.dataLayer = window.dataLayer || [];\nfunction gtag(){dataLayer.push(arguments);}\ngtag('js', new Date());gtag('config', 'G-SSCV7PVEB3');` }
-          </script>
+          <GoogleAnalytics gaId="G-SSCV7PVEB3" />
         </Head>
         <body>
           <Main />
           <NextScript />
-          @babel/plugin-proposal-decorators
         </body>
       </Html>
     );

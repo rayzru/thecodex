@@ -39,9 +39,9 @@ const Share: React.FunctionComponent<PropsWithChildren<Props>> = ({
         className={style.icon}
         stroke="currentColor"
         viewBox="0 0 24 24"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
       >
         <circle cx="18" cy="5" r="3" />
         <circle cx="6" cy="12" r="3" />
